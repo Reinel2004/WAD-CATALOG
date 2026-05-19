@@ -163,6 +163,115 @@
       text-transform: uppercase;
       color: #a87040;
     }
+
+    /* ── IMAGE LIGHTBOX ─────────────────────────────────────────── */
+    #lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0, 0, 0, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #lightbox.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    #lightbox-img {
+      max-width: 100vw;
+      max-height: 100dvh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border-radius: 4px;
+      /* Pinch-to-zoom support */
+      touch-action: pinch-zoom;
+    }
+    #lightbox.open #lightbox-img {
+      transform: scale(1);
+    }
+    #lightbox-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.22); }
+    #lightbox-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    /* Clickable image inside modal */
+    #modal-img-wrapper {
+      position: relative;
+      cursor: zoom-in;
+      overflow: hidden;
+      border-radius: inherit;
+    }
+    #modal-img-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.25s;
+    }
+    #modal-img-wrapper:hover::after {
+      background: rgba(0,0,0,0.12);
+    }
+    .zoom-icon {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+      z-index: 2;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0.85);
+      transition: opacity 0.2s, transform 0.2s;
+      pointer-events: none;
+    }
+    #modal-img-wrapper:hover .zoom-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+    /* Always show zoom icon on touch devices */
+    @media (hover: none) {
+      .zoom-icon {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
   </style>
 </head>
 
@@ -275,9 +384,23 @@
       <svg class="w-4 h-4 text-obsidian-600 dark:text-stone-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
     <div class="grid md:grid-cols-2">
-      <div class="overflow-hidden rounded-tl-3xl rounded-bl-3xl rounded-tr-3xl md:rounded-tr-none rounded-br-none">
-        <img id="modal-img" src="" alt="" class="w-full h-72 md:h-full object-cover"/>
+
+      <!-- ── Tappable image wrapper ── -->
+      <div id="modal-img-wrapper"
+           class="rounded-tl-3xl rounded-bl-3xl rounded-tr-3xl md:rounded-tr-none rounded-br-none"
+           onclick="openLightbox()"
+           title="Tap to enlarge">
+        <img id="modal-img" src="" alt="" class="w-full h-72 md:h-full object-cover rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none rounded-bl-none md:rounded-bl-3xl"/>
+        <!-- Zoom icon badge -->
+        <div class="zoom-icon">
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/>
+            <path d="m21 21-4.35-4.35"/>
+            <path d="M11 8v6M8 11h6"/>
+          </svg>
+        </div>
       </div>
+
       <div class="p-7 flex flex-col gap-4">
         <div>
           <span id="modal-category" class="category-badge inline-block px-3 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300 mb-3"></span>
@@ -304,7 +427,7 @@
             <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-0.5">Starting at</p>
             <p id="modal-price" class="font-display text-3xl text-walnut-600 dark:text-walnut-400 font-semibold"></p>
           </div>
-          <a id="modal-inquire" href="#" target="_blank" class="inline-flex items-center gap-2 bg-walnut-600 hover:bg-walnut-700 text-white text-sm font-body px-5 py-3 rounded-xl transition">
+          <a id="modal-inquire" href="https://m.me/wadfurniturephilippines2025" target="_blank" class="inline-flex items-center gap-2 bg-walnut-600 hover:bg-walnut-700 text-white text-sm font-body px-5 py-3 rounded-xl transition">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             Inquire Now
           </a>
@@ -314,13 +437,24 @@
   </div>
 </div>
 
+<!-- ═══════════════════════════ IMAGE LIGHTBOX ═══════════════════════════ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Full size image">
+  <img id="lightbox-img" src="" alt="Full size product image"/>
+  <button id="lightbox-close" aria-label="Close lightbox">
+    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path d="M18 6 6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <p id="lightbox-hint">Tap anywhere to close</p>
+</div>
+
 <!-- ═══════════════════════════ BACK TO TOP ═══════════════════════════ -->
 <button id="back-to-top" aria-label="Back to top" class="fixed bottom-28 right-5 z-40 w-11 h-11 rounded-full bg-walnut-600 text-white flex items-center justify-center shadow-lg opacity-0 -translate-y-2 pointer-events-none hover:bg-walnut-700 transition">
   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
 </button>
 
 <!-- ═══════════════════════════ MESSENGER BUTTON ═══════════════════════════ -->
-<a href="https://m.me/" target="_blank" id="messenger-btn" class="pulse-ring fixed bottom-6 right-5 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center" style="background: linear-gradient(135deg,#0099ff,#a033ff);" title="Chat on Messenger">
+<a href="https://m.me/wadfurniturephilippines2025" target="_blank" id="messenger-btn" class="pulse-ring fixed bottom-6 right-5 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center" style="background: linear-gradient(135deg,#0099ff,#a033ff);" title="Chat on Messenger">
   <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 0C5.374 0 0 4.976 0 11.12c0 3.488 1.724 6.598 4.419 8.649V24l4.042-2.224a12.44 12.44 0 003.539.511c6.626 0 12-4.976 12-11.12C24 4.976 18.626 0 12 0zm1.264 14.981l-3.064-3.27-5.981 3.27L10.764 8.4l3.136 3.27L19.8 8.4l-6.536 6.581z"/>
   </svg>
@@ -538,117 +672,6 @@ const products = [
     image: './assets/doors/door23.png',
     thumb: './assets/doors/door23.png',
   },
-  // CABINETS (4)
-  // {
-  //   id: 5, category: 'Cabinets', name: 'Almario Wardrobe Cabinet',
-  //   material: 'Solid Acacia & Plywood', dimensions: '200 × 120 × 60 cm',
-  //   price: 52000, priceDisplay: '₱52,000',
-  //   finishes: ['Dark Walnut', 'Ivory White', 'Natural Acacia'],
-  //   description: 'Floor-to-ceiling storage reimagined. Solid Acacia frames with dovetail-jointed drawers, soft-close hinges, and customizable interior compartments.',
-  //   image: './assets/cabinets/cabinet1.png',
-  //   thumb: './assets/cabinets/cabinet1.png',
-  // },
-  // {
-  //   id: 6, category: 'Cabinets', name: 'Palmas Display Cabinet',
-  //   material: 'Narra Wood & Glass', dimensions: '180 × 80 × 40 cm',
-  //   price: 38500, priceDisplay: '₱38,500',
-  //   finishes: ['Honey Oak', 'Midnight Black', 'Natural Narra'],
-  //   description: 'Showcase your finest collections in this glass-fronted display cabinet. Hand-rubbed Narra exterior with brass accent hardware and integrated LED lighting rails.',
-  //   image: './assets/cabinets/cabinet2.png',
-  //   thumb: './assets/cabinets/cabinet2.png',
-  // },
-  // {
-  //   id: 7, category: 'Cabinets', name: 'Luna Kitchen Cabinet Set',
-  //   material: 'Solid Mahogany & Marine Plywood', dimensions: '90 × 300 × 60 cm',
-  //   price: 87000, priceDisplay: '₱87,000',
-  //   finishes: ['Cream White', 'Ash Grey', 'Cognac Brown'],
-  //   description: 'A complete modular kitchen cabinet system crafted for the discerning Filipino home. Moisture-resistant marine plywood core with solid mahogany face frames.',
-  //   image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=75',
-  // },
-  // {
-  //   id: 8, category: 'Cabinets', name: 'Recto Accent Sideboard',
-  //   material: 'Mango Wood & Rattan', dimensions: '85 × 160 × 45 cm',
-  //   price: 29900, priceDisplay: '₱29,900',
-  //   finishes: ['Mango Natural', 'Aged Teak', 'Whitewash'],
-  //   description: 'A versatile sideboard blending Philippine mango wood with hand-woven rattan inserts. Perfect as a dining room accent or hallway statement piece.',
-  //   image: 'https://images.unsplash.com/photo-1449247666642-264389f5f5b1?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1449247666642-264389f5f5b1?w=600&q=75',
-  // },
-  // // DINING TABLES (4)
-  // {
-  //   id: 9, category: 'Dining Tables', name: 'Rizal Live-Edge Dining Table',
-  //   material: 'Solid Slab Acacia', dimensions: '76 × 220 × 100 cm',
-  //   price: 95000, priceDisplay: '₱95,000',
-  //   finishes: ['Natural with Clear Coat', 'Dark Oil Finish', 'Light Honey'],
-  //   description: 'A breathtaking single-slab Acacia dining table preserving the tree\'s natural edge. Each piece is uniquely one-of-a-kind — a heirloom guaranteed to be passed down.',
-  //   image: 'https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?w=600&q=75',
-  // },
-  // {
-  //   id: 10, category: 'Dining Tables', name: 'Cordillera Round Table',
-  //   material: 'Solid Narra', dimensions: '76 × Ø150 cm',
-  //   price: 68000, priceDisplay: '₱68,000',
-  //   finishes: ['Warm Narra', 'Dark Espresso', 'Antique Bronze'],
-  //   description: 'An intimate round dining table for 6-8, hand-crafted from heirloom-grade Narra. Pedestal base with hand-turned legs and a mirror-smooth tabletop.',
-  //   image: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=600&q=75',
-  // },
-  // {
-  //   id: 11, category: 'Dining Tables', name: 'Bonifacio Extendable Table',
-  //   material: 'Mahogany & Steel Base', dimensions: '76 × 160–220 × 90 cm',
-  //   price: 74500, priceDisplay: '₱74,500',
-  //   finishes: ['Walnut Brown', 'Matte Black Steel', 'Light Mahogany'],
-  //   description: 'Versatility meets refined design. Butterfly-leaf extension mechanism adds 60 cm of seating capacity — ideal for everyday dining and festive entertaining.',
-  //   image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&q=75',
-  // },
-  // {
-  //   id: 12, category: 'Dining Tables', name: 'Cebu Marble & Wood Table',
-  //   material: 'Marble Top & Acacia Legs', dimensions: '76 × 200 × 95 cm',
-  //   price: 112000, priceDisplay: '₱112,000',
-  //   finishes: ['White Carrara', 'Grey Emperador', 'Black Marquina'],
-  //   description: 'The pinnacle of dining luxury — premium imported marble set on solid Acacia timber legs with brass-capped feet. A table that defines the room.',
-  //   image: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600&q=75',
-  // },
-  // // BED FRAMES (4)
-  // {
-  //   id: 13, category: 'Bed Frames', name: 'Harana Platform Bed Frame',
-  //   material: 'Solid Mahogany', dimensions: '35 × 180 × 210 cm (King)',
-  //   price: 68000, priceDisplay: '₱68,000',
-  //   finishes: ['Dark Mahogany', 'Natural Oak', 'Ebony Black'],
-  //   description: 'Low-profile Japanese-inspired platform frame in solid Philippine mahogany. Slatted base for optimal mattress support with a floating headboard aesthetic.',
-  //   image: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=600&q=75',
-  // },
-  // {
-  //   id: 14, category: 'Bed Frames', name: 'Sampaguita Upholstered Bed',
-  //   material: 'Acacia Frame & Premium Linen', dimensions: '55 × 180 × 210 cm (King)',
-  //   price: 82500, priceDisplay: '₱82,500',
-  //   finishes: ['Stone Linen', 'Charcoal Velvet', 'Ivory Bouclé'],
-  //   description: 'Hotel-suite luxury brought home. Solid Acacia frame wrapped in hand-stitched premium upholstery with a tall, cushioned wingback headboard.',
-  //   image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=75',
-  // },
-  // {
-  //   id: 15, category: 'Bed Frames', name: 'Capiz Storage Bed',
-  //   material: 'Solid Narra & Marine Plywood', dimensions: '50 × 180 × 210 cm (King)',
-  //   price: 76000, priceDisplay: '₱76,000',
-  //   finishes: ['Warm Narra', 'Slate Grey', 'Cream White'],
-  //   description: 'Maximise bedroom storage with hydraulic lift-up base revealing a generous under-bed cavity. Solid Narra headboard with integrated USB charging ports.',
-  //   image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=75',
-  // },
-  // {
-  //   id: 16, category: 'Bed Frames', name: 'Balayong Canopy Bed',
-  //   material: 'Solid Kamagong (Ironwood)', dimensions: '200 × 180 × 240 cm (King)',
-  //   price: 145000, priceDisplay: '₱145,000',
-  //   finishes: ['Natural Kamagong', 'Ebony Oil', 'Aged Bronze'],
-  //   description: 'A masterwork of Philippine joinery. Four-poster canopy bed in rare Kamagong ironwood — one of the most durable timbers in the world. A lifetime heirloom.',
-  //   image: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&q=80',
-  //   thumb: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=75',
-  // },
 ];
 
 // ─── STATE ───────────────────────────────────────────────────────────────────
@@ -805,7 +828,44 @@ function closeModal() {
 
 document.getElementById('modal-close').addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (!lightbox.classList.contains('open')) closeModal();
+  }
+});
+
+// ─── LIGHTBOX ────────────────────────────────────────────────────────────────
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightbox-img');
+const lightboxClose = document.getElementById('lightbox-close');
+
+function openLightbox() {
+  const src = document.getElementById('modal-img').src;
+  const alt = document.getElementById('modal-img').alt;
+  lightboxImg.src = src;
+  lightboxImg.alt = alt;
+  lightbox.classList.add('open');
+  // Prevent body scroll while lightbox is open (already set by modal)
+}
+
+function closeLightbox() {
+  lightbox.classList.remove('open');
+}
+
+lightboxClose.addEventListener('click', e => {
+  e.stopPropagation();
+  closeLightbox();
+});
+
+// Tap anywhere on the dark background to close
+lightbox.addEventListener('click', e => {
+  if (e.target !== lightboxImg) closeLightbox();
+});
+
+// Close lightbox on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+});
 
 // ─── BACK TO TOP ─────────────────────────────────────────────────────────────
 const backToTop = document.getElementById('back-to-top');

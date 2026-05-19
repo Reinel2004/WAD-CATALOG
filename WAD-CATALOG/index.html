@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WAD Furniture Philippines — Premium Catalog</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Cormorant Garamond', 'serif'],
+            body: ['DM Sans', 'sans-serif'],
+          },
+          colors: {
+            walnut: {
+              50: '#faf6f1',
+              100: '#f2e9db',
+              200: '#e3cfb4',
+              300: '#cfae86',
+              400: '#bb8d5e',
+              500: '#a87040',
+              600: '#8f5933',
+              700: '#72432b',
+              800: '#5d3727',
+              900: '#4d2f24',
+            },
+            obsidian: {
+              50: '#f6f6f6',
+              100: '#e7e7e7',
+              200: '#d1d1d1',
+              300: '#b0b0b0',
+              400: '#888888',
+              500: '#6d6d6d',
+              600: '#5d5d5d',
+              700: '#4f4f4f',
+              800: '#454545',
+              900: '#1a1a1a',
+              950: '#0d0d0d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, .font-display { font-family: 'Cormorant Garamond', serif; }
+
+    /* Loading screen */
+    #loading-screen {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #0d0d0d;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #loading-screen.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-bar {
+      width: 160px; height: 1px; background: #333;
+      position: relative; margin-top: 32px; overflow: hidden;
+    }
+    .loader-bar::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, #a87040, #cfae86);
+      animation: load 1.8s ease forwards;
+    }
+    @keyframes load { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+
+    /* Glassmorphism navbar */
+    .glass-nav {
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      background: rgba(255,255,255,0.72);
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    .dark .glass-nav {
+      background: rgba(13,13,13,0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Card hover zoom */
+    .product-card { transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s ease; }
+    .product-card:hover { transform: translateY(-6px) scale(1.01); }
+    .product-card img { transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .product-card:hover img { transform: scale(1.07); }
+
+    /* Fade in on scroll */
+    .fade-in { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Modal */
+    #modal-overlay {
+      transition: opacity 0.3s ease;
+    }
+    #modal-content {
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    #modal-overlay.hidden { opacity: 0; pointer-events: none; }
+    #modal-overlay:not(.hidden) { opacity: 1; }
+
+    /* Filter buttons active */
+    .filter-btn.active {
+      background: #a87040 !important;
+      color: #fff !important;
+      border-color: #a87040 !important;
+    }
+
+    /* Back to top */
+    #back-to-top {
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    #back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+    /* Messenger button pulse */
+    .pulse-ring {
+      animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite;
+    }
+    @keyframes pulse-ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(168,112,64,0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(168,112,64,0); }
+    }
+
+    /* Category badge */
+    .category-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    /* Search highlight */
+    .no-results { display: none; }
+    .no-results.show { display: flex; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #a87040; border-radius: 10px; }
+
+    /* Dark mode card glass */
+    .dark .card-glass {
+      background: rgba(26,26,26,0.85);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .card-glass {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    /* Separator line */
+    .sep { width: 40px; height: 1px; background: #a87040; }
+
+    /* Section label */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #a87040;
+    }
+  </style>
+</head>
+
+<body class="bg-stone-50 dark:bg-obsidian-950 text-obsidian-900 dark:text-stone-100 transition-colors duration-500">
+
+<!-- ═══════════════════════════ LOADING SCREEN ═══════════════════════════ -->
+<div id="loading-screen">
+  <p class="font-display text-3xl text-walnut-400 tracking-widest italic">WAD Furniture</p>
+  <p style="font-family:'DM Sans',sans-serif;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#5d5d5d;margin-top:8px;">Philippines</p>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
+<nav id="navbar" class="glass-nav fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-16">
+  <div class="max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-full bg-walnut-600 flex items-center justify-center">
+        <img src="./assets/logo.png" alt="WAD Furniture Logo" srcset="">
+      </div>
+      <div>
+        <p class="font-display text-lg leading-none text-obsidian-900 dark:text-stone-100 font-semibold tracking-wide">WAD Furniture</p>
+        <p class="text-[9px] tracking-[0.22em] uppercase text-walnut-500 font-body mt-0.5">Philippines</p>
+      </div>
+    </div>
+
+    <!-- Desktop search -->
+    <div class="hidden md:flex items-center flex-1 max-w-sm mx-8">
+      <div class="relative w-full">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-obsidian-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-input" type="text" placeholder="Search furniture…" class="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-obsidian-200 dark:border-obsidian-700 bg-white/60 dark:bg-obsidian-900/60 backdrop-blur focus:outline-none focus:ring-2 focus:ring-walnut-400 placeholder-obsidian-400 dark:text-stone-200 transition"/>
+      </div>
+    </div>
+
+    <!-- Right actions -->
+    <div class="flex items-center gap-3">
+      <!-- Dark mode toggle -->
+      <button id="dark-toggle" aria-label="Toggle dark mode" class="w-9 h-9 rounded-full border border-obsidian-200 dark:border-obsidian-700 flex items-center justify-center hover:bg-walnut-100 dark:hover:bg-obsidian-800 transition">
+        <svg id="sun-icon" class="w-4 h-4 text-obsidian-600 dark:hidden" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg id="moon-icon" class="w-4 h-4 text-stone-300 hidden dark:block" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+      </button>
+      <!-- Hamburger -->
+      <button id="hamburger" class="md:hidden w-9 h-9 rounded-full border border-obsidian-200 dark:border-obsidian-700 flex flex-col items-center justify-center gap-1.5 hover:bg-walnut-100 dark:hover:bg-obsidian-800 transition">
+        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block transition-all duration-300" id="hb1"></span>
+        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block transition-all duration-300" id="hb2"></span>
+        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block transition-all duration-300" id="hb3"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden overflow-hidden max-h-0 transition-all duration-400 ease-in-out">
+    <div class="pb-4 pt-2 px-2 flex flex-col gap-3">
+      <div class="relative">
+        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-obsidian-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input id="search-mobile" type="text" placeholder="Search furniture…" class="w-full pl-10 pr-4 py-2.5 text-sm rounded-xl border border-obsidian-200 dark:border-obsidian-700 bg-white/60 dark:bg-obsidian-900/60 focus:outline-none focus:ring-2 focus:ring-walnut-400 placeholder-obsidian-400 dark:text-stone-200"/>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════ CATALOG HEADER ═══════════════════════════ -->
+<main class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 pt-28 md:pt-32">
+
+  <div class="flex flex-col items-start gap-3 mb-10 fade-in">
+    <p class="section-label">Premium Collection</p>
+    <div class="sep"></div>
+    <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-light text-obsidian-900 dark:text-stone-50 leading-tight">
+      Crafted for <em class="text-walnut-500">Living</em>
+    </h1>
+    <p class="font-body text-obsidian-500 dark:text-obsidian-300 text-sm md:text-base max-w-lg leading-relaxed mt-1">
+      Handcrafted Philippine hardwood furniture built for generations. Each piece tells a story of craftsmanship and timeless elegance.
+    </p>
+  </div>
+
+  <!-- ═══════════ FILTER BUTTONS ═══════════ -->
+  <div
+  id="filter-bar"
+  class="sticky top-16 md:top-20 z-30 flex flex-wrap gap-2 mb-10 fade-in
+         py-4 bg-stone-50/80 dark:bg-obsidian-950/80
+         backdrop-blur-xl border-b border-black/5 dark:border-white/5"
+>
+    <button class="filter-btn active px-5 py-2 rounded-full text-sm font-body border border-walnut-400 text-walnut-600 dark:text-walnut-300 dark:border-walnut-600 hover:bg-walnut-50 dark:hover:bg-walnut-900/30 transition" data-filter="all">All</button>
+    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Doors">Doors</button>
+    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Cabinets">Cabinets</button>
+    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Dining Tables">Dining Tables</button>
+    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Bed Frames">Bed Frames</button>
+  </div>
+
+  <!-- ═══════════ PRODUCT COUNT ═══════════ -->
+  <p id="product-count" class="text-xs tracking-widest uppercase text-obsidian-400 dark:text-obsidian-500 mb-6 font-body"></p>
+
+  <!-- ═══════════ NO RESULTS ═══════════ -->
+  <div id="no-results" class="no-results flex-col items-center justify-center py-24 gap-4">
+    <svg class="w-10 h-10 text-obsidian-300" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <p class="font-display text-2xl text-obsidian-400 italic">No products found</p>
+    <p class="text-sm text-obsidian-400 font-body">Try a different keyword or category</p>
+  </div>
+
+  <!-- ═══════════ PRODUCT GRID ═══════════ -->
+  <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-24">
+  </div>
+</main>
+
+<!-- ═══════════════════════════ MODAL ═══════════════════════════ -->
+<div id="modal-overlay" class="hidden fixed inset-0 z-[200] flex items-center justify-center p-4 bg-obsidian-950/70 backdrop-blur-sm">
+  <div id="modal-content" class="relative w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-3xl card-glass shadow-2xl dark:shadow-obsidian-950/80">
+    <button id="modal-close" class="absolute top-5 right-5 z-10 w-9 h-9 rounded-full bg-obsidian-100 dark:bg-obsidian-800 flex items-center justify-center hover:bg-walnut-100 dark:hover:bg-walnut-900/40 transition">
+      <svg class="w-4 h-4 text-obsidian-600 dark:text-stone-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="grid md:grid-cols-2">
+      <div class="overflow-hidden rounded-tl-3xl rounded-bl-3xl rounded-tr-3xl md:rounded-tr-none rounded-br-none">
+        <img id="modal-img" src="" alt="" class="w-full h-72 md:h-full object-cover"/>
+      </div>
+      <div class="p-7 flex flex-col gap-4">
+        <div>
+          <span id="modal-category" class="category-badge inline-block px-3 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300 mb-3"></span>
+          <h2 id="modal-name" class="font-display text-3xl font-semibold text-obsidian-900 dark:text-stone-50 leading-tight"></h2>
+        </div>
+        <div class="sep"></div>
+        <p id="modal-desc" class="text-sm font-body text-obsidian-500 dark:text-obsidian-300 leading-relaxed"></p>
+        <div class="grid grid-cols-2 gap-3 text-sm font-body">
+          <div class="bg-stone-100 dark:bg-obsidian-900/50 rounded-xl p-3">
+            <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-1">Material</p>
+            <p id="modal-material" class="text-obsidian-800 dark:text-stone-200 font-medium"></p>
+          </div>
+          <div class="bg-stone-100 dark:bg-obsidian-900/50 rounded-xl p-3">
+            <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-1">Dimensions</p>
+            <p id="modal-dimensions" class="text-obsidian-800 dark:text-stone-200 font-medium"></p>
+          </div>
+          <div class="bg-stone-100 dark:bg-obsidian-900/50 rounded-xl p-3 col-span-2">
+            <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-2">Available Finishes</p>
+            <div id="modal-finishes" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+        <div class="flex items-end justify-between mt-auto pt-2 border-t border-obsidian-100 dark:border-obsidian-800">
+          <div>
+            <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-0.5">Starting at</p>
+            <p id="modal-price" class="font-display text-3xl text-walnut-600 dark:text-walnut-400 font-semibold"></p>
+          </div>
+          <a id="modal-inquire" href="#" target="_blank" class="inline-flex items-center gap-2 bg-walnut-600 hover:bg-walnut-700 text-white text-sm font-body px-5 py-3 rounded-xl transition">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Inquire Now
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════ BACK TO TOP ═══════════════════════════ -->
+<button id="back-to-top" aria-label="Back to top" class="fixed bottom-28 right-5 z-40 w-11 h-11 rounded-full bg-walnut-600 text-white flex items-center justify-center shadow-lg opacity-0 -translate-y-2 pointer-events-none hover:bg-walnut-700 transition">
+  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
+</button>
+
+<!-- ═══════════════════════════ MESSENGER BUTTON ═══════════════════════════ -->
+<a href="https://m.me/" target="_blank" id="messenger-btn" class="pulse-ring fixed bottom-6 right-5 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center" style="background: linear-gradient(135deg,#0099ff,#a033ff);" title="Chat on Messenger">
+  <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0C5.374 0 0 4.976 0 11.12c0 3.488 1.724 6.598 4.419 8.649V24l4.042-2.224a12.44 12.44 0 003.539.511c6.626 0 12-4.976 12-11.12C24 4.976 18.626 0 12 0zm1.264 14.981l-3.064-3.27-5.981 3.27L10.764 8.4l3.136 3.27L19.8 8.4l-6.536 6.581z"/>
+  </svg>
+</a>
+
+<!-- ═══════════════════════════ JAVASCRIPT ═══════════════════════════ -->
+<script>
+// ─── PRODUCT DATA ────────────────────────────────────────────────────────────
+const products = [
+  // DOORS (4)
+  {
+    id: 1, category: 'Doors', name: 'Hacienda Solid Mahogany Door',
+    material: 'Solid Mahogany', dimensions: '210 × 90cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Natural Oak', 'Dark Walnut', 'Ebony'],
+    description: 'A statement entrance crafted from premium Philippine mahogany with hand-carved panel detailing. Precision-engineered for lasting elegance and superior insulation.',
+    image: './assets/doors/door1.jpg',
+    thumb: './assets/doors/door1.jpg',
+  },
+  {
+    id: 2, category: 'Doors', name: 'Solid Mahogany Door',
+    material: 'Mahogany Wood', dimensions: '210 × 80 × 4.5 cm',
+    price: 19800, priceDisplay: '₱19,800',
+    finishes: ['Honey Teak', 'Matte White', 'Natural Oak'],
+    description: 'Classic Filipino craftsmanship in a raised-panel design. Made from prized Narra wood — smooth, durable, and rich in character.',
+    image: './assets/doors/door2.jpg',
+    thumb: './assets/doors/door2.jpg',
+  },
+  {
+    id: 3, category: 'Doors', name: 'Verona Frosted Glass Door',
+    material: 'Acacia & Tempered Glass', dimensions: '215 × 90 × 5 cm',
+    price: 34200, priceDisplay: '₱34,200',
+    finishes: ['Smoked Bronze', 'Satin Black', 'Brushed Gold'],
+    description: 'Contemporary elegance meets traditional craftsmanship. Frosted glass panels framed in solid Acacia for a dramatic yet refined entrance.',
+    image: './assets/doors/door3.jpg',
+    thumb: './assets/doors/door3.jpg',
+  },
+  {
+    id: 4, category: 'Doors', name: 'Solid Modern Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '240 × 120 × 3.5 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos',
+    image: './assets/doors/door4.png',
+    thumb: './assets/doors/door4.png',
+  },
+  {
+    id: 5, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door5.png',
+    thumb: './assets/doors/door5.png',
+  },
+  {
+    id: 6, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door6.png',
+    thumb: './assets/doors/door6.png',
+  },
+  {
+    id: 7, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door7.png',
+    thumb: './assets/doors/door7.png',
+  },
+  {
+    id: 8, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door8.png',
+    thumb: './assets/doors/door8.png',
+  },
+  {
+    id: 9, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door9.png',
+    thumb: './assets/doors/door9.png',
+  },
+  {
+    id: 10, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door10.png',
+    thumb: './assets/doors/door10.png',
+  },
+  {
+    id: 11, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door11.png',
+    thumb: './assets/doors/door11.png',
+  },
+  {
+    id: 12, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door12.png',
+    thumb: './assets/doors/door12.png',
+  },
+  {
+    id: 13, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door13.png',
+    thumb: './assets/doors/door13.png',
+  },
+  {
+    id: 14, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door14.jpg',
+    thumb: './assets/doors/door14.jpg',
+  },
+  {
+    id: 15, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door15.png',
+    thumb: './assets/doors/door15.png',
+  },
+  {
+    id: 16, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'A masterpiece of Filipino craftsmanship. Hand-carved from solid Narra with intricate floral motifs and a rich, lustrous finish.',
+    image: './assets/doors/door16.png',
+    thumb: './assets/doors/door16.png',
+  },
+  {
+    id: 17, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'A masterpiece of Filipino craftsmanship. Hand-carved from solid Narra with intricate floral motifs and a rich, lustrous finish.',
+    image: './assets/doors/door17.png',
+    thumb: './assets/doors/door17.png',
+  },
+  {
+    id: 18, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door18.png',
+    thumb: './assets/doors/door18.png',
+  },
+  {
+    id: 19, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door19.png',
+    thumb: './assets/doors/door19.png',
+  },
+  {
+    id: 20, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door20.png',
+    thumb: './assets/doors/door20.png',
+  },
+  {
+    id: 21, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door21.png',
+    thumb: './assets/doors/door21.png',
+  },
+  {
+    id: 22, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door22.png',
+    thumb: './assets/doors/door22.png',
+  },
+  {
+    id: 23, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '210 × 90 × 4 cm',
+    price: 7499, priceDisplay: '₱7,499',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
+    image: './assets/doors/door23.png',
+    thumb: './assets/doors/door23.png',
+  },
+  // CABINETS (4)
+  // {
+  //   id: 5, category: 'Cabinets', name: 'Almario Wardrobe Cabinet',
+  //   material: 'Solid Acacia & Plywood', dimensions: '200 × 120 × 60 cm',
+  //   price: 52000, priceDisplay: '₱52,000',
+  //   finishes: ['Dark Walnut', 'Ivory White', 'Natural Acacia'],
+  //   description: 'Floor-to-ceiling storage reimagined. Solid Acacia frames with dovetail-jointed drawers, soft-close hinges, and customizable interior compartments.',
+  //   image: './assets/cabinets/cabinet1.png',
+  //   thumb: './assets/cabinets/cabinet1.png',
+  // },
+  // {
+  //   id: 6, category: 'Cabinets', name: 'Palmas Display Cabinet',
+  //   material: 'Narra Wood & Glass', dimensions: '180 × 80 × 40 cm',
+  //   price: 38500, priceDisplay: '₱38,500',
+  //   finishes: ['Honey Oak', 'Midnight Black', 'Natural Narra'],
+  //   description: 'Showcase your finest collections in this glass-fronted display cabinet. Hand-rubbed Narra exterior with brass accent hardware and integrated LED lighting rails.',
+  //   image: './assets/cabinets/cabinet2.png',
+  //   thumb: './assets/cabinets/cabinet2.png',
+  // },
+  // {
+  //   id: 7, category: 'Cabinets', name: 'Luna Kitchen Cabinet Set',
+  //   material: 'Solid Mahogany & Marine Plywood', dimensions: '90 × 300 × 60 cm',
+  //   price: 87000, priceDisplay: '₱87,000',
+  //   finishes: ['Cream White', 'Ash Grey', 'Cognac Brown'],
+  //   description: 'A complete modular kitchen cabinet system crafted for the discerning Filipino home. Moisture-resistant marine plywood core with solid mahogany face frames.',
+  //   image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=75',
+  // },
+  // {
+  //   id: 8, category: 'Cabinets', name: 'Recto Accent Sideboard',
+  //   material: 'Mango Wood & Rattan', dimensions: '85 × 160 × 45 cm',
+  //   price: 29900, priceDisplay: '₱29,900',
+  //   finishes: ['Mango Natural', 'Aged Teak', 'Whitewash'],
+  //   description: 'A versatile sideboard blending Philippine mango wood with hand-woven rattan inserts. Perfect as a dining room accent or hallway statement piece.',
+  //   image: 'https://images.unsplash.com/photo-1449247666642-264389f5f5b1?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1449247666642-264389f5f5b1?w=600&q=75',
+  // },
+  // // DINING TABLES (4)
+  // {
+  //   id: 9, category: 'Dining Tables', name: 'Rizal Live-Edge Dining Table',
+  //   material: 'Solid Slab Acacia', dimensions: '76 × 220 × 100 cm',
+  //   price: 95000, priceDisplay: '₱95,000',
+  //   finishes: ['Natural with Clear Coat', 'Dark Oil Finish', 'Light Honey'],
+  //   description: 'A breathtaking single-slab Acacia dining table preserving the tree\'s natural edge. Each piece is uniquely one-of-a-kind — a heirloom guaranteed to be passed down.',
+  //   image: 'https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1615876234886-fd9a39fda97f?w=600&q=75',
+  // },
+  // {
+  //   id: 10, category: 'Dining Tables', name: 'Cordillera Round Table',
+  //   material: 'Solid Narra', dimensions: '76 × Ø150 cm',
+  //   price: 68000, priceDisplay: '₱68,000',
+  //   finishes: ['Warm Narra', 'Dark Espresso', 'Antique Bronze'],
+  //   description: 'An intimate round dining table for 6-8, hand-crafted from heirloom-grade Narra. Pedestal base with hand-turned legs and a mirror-smooth tabletop.',
+  //   image: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1604578762246-41134e37f9cc?w=600&q=75',
+  // },
+  // {
+  //   id: 11, category: 'Dining Tables', name: 'Bonifacio Extendable Table',
+  //   material: 'Mahogany & Steel Base', dimensions: '76 × 160–220 × 90 cm',
+  //   price: 74500, priceDisplay: '₱74,500',
+  //   finishes: ['Walnut Brown', 'Matte Black Steel', 'Light Mahogany'],
+  //   description: 'Versatility meets refined design. Butterfly-leaf extension mechanism adds 60 cm of seating capacity — ideal for everyday dining and festive entertaining.',
+  //   image: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&q=75',
+  // },
+  // {
+  //   id: 12, category: 'Dining Tables', name: 'Cebu Marble & Wood Table',
+  //   material: 'Marble Top & Acacia Legs', dimensions: '76 × 200 × 95 cm',
+  //   price: 112000, priceDisplay: '₱112,000',
+  //   finishes: ['White Carrara', 'Grey Emperador', 'Black Marquina'],
+  //   description: 'The pinnacle of dining luxury — premium imported marble set on solid Acacia timber legs with brass-capped feet. A table that defines the room.',
+  //   image: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600&q=75',
+  // },
+  // // BED FRAMES (4)
+  // {
+  //   id: 13, category: 'Bed Frames', name: 'Harana Platform Bed Frame',
+  //   material: 'Solid Mahogany', dimensions: '35 × 180 × 210 cm (King)',
+  //   price: 68000, priceDisplay: '₱68,000',
+  //   finishes: ['Dark Mahogany', 'Natural Oak', 'Ebony Black'],
+  //   description: 'Low-profile Japanese-inspired platform frame in solid Philippine mahogany. Slatted base for optimal mattress support with a floating headboard aesthetic.',
+  //   image: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1505693314120-0d443867891c?w=600&q=75',
+  // },
+  // {
+  //   id: 14, category: 'Bed Frames', name: 'Sampaguita Upholstered Bed',
+  //   material: 'Acacia Frame & Premium Linen', dimensions: '55 × 180 × 210 cm (King)',
+  //   price: 82500, priceDisplay: '₱82,500',
+  //   finishes: ['Stone Linen', 'Charcoal Velvet', 'Ivory Bouclé'],
+  //   description: 'Hotel-suite luxury brought home. Solid Acacia frame wrapped in hand-stitched premium upholstery with a tall, cushioned wingback headboard.',
+  //   image: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?w=600&q=75',
+  // },
+  // {
+  //   id: 15, category: 'Bed Frames', name: 'Capiz Storage Bed',
+  //   material: 'Solid Narra & Marine Plywood', dimensions: '50 × 180 × 210 cm (King)',
+  //   price: 76000, priceDisplay: '₱76,000',
+  //   finishes: ['Warm Narra', 'Slate Grey', 'Cream White'],
+  //   description: 'Maximise bedroom storage with hydraulic lift-up base revealing a generous under-bed cavity. Solid Narra headboard with integrated USB charging ports.',
+  //   image: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=75',
+  // },
+  // {
+  //   id: 16, category: 'Bed Frames', name: 'Balayong Canopy Bed',
+  //   material: 'Solid Kamagong (Ironwood)', dimensions: '200 × 180 × 240 cm (King)',
+  //   price: 145000, priceDisplay: '₱145,000',
+  //   finishes: ['Natural Kamagong', 'Ebony Oil', 'Aged Bronze'],
+  //   description: 'A masterwork of Philippine joinery. Four-poster canopy bed in rare Kamagong ironwood — one of the most durable timbers in the world. A lifetime heirloom.',
+  //   image: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=800&q=80',
+  //   thumb: 'https://images.unsplash.com/photo-1586105251261-72a756497a11?w=600&q=75',
+  // },
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let activeFilter = 'all';
+let searchQuery = '';
+
+// ─── DARK MODE ───────────────────────────────────────────────────────────────
+const darkToggle = document.getElementById('dark-toggle');
+const html = document.documentElement;
+
+function applyDark(dark) {
+  dark ? html.classList.add('dark') : html.classList.remove('dark');
+  localStorage.setItem('wad-dark', dark ? '1' : '0');
+}
+applyDark(localStorage.getItem('wad-dark') === '1');
+darkToggle.addEventListener('click', () => applyDark(!html.classList.contains('dark')));
+
+// ─── HAMBURGER ───────────────────────────────────────────────────────────────
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+let menuOpen = false;
+
+hamburger.addEventListener('click', () => {
+  menuOpen = !menuOpen;
+  mobileMenu.style.maxHeight = menuOpen ? mobileMenu.scrollHeight + 'px' : '0';
+});
+
+// ─── SEARCH ──────────────────────────────────────────────────────────────────
+const searchInput = document.getElementById('search-input');
+const searchMobile = document.getElementById('search-mobile');
+
+function onSearch(val) {
+  searchQuery = val.toLowerCase();
+  renderProducts();
+}
+
+searchInput.addEventListener('input', e => {
+  searchMobile.value = e.target.value;
+  onSearch(e.target.value);
+});
+searchMobile.addEventListener('input', e => {
+  searchInput.value = e.target.value;
+  onSearch(e.target.value);
+});
+
+// ─── FILTER ──────────────────────────────────────────────────────────────────
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderProducts();
+  });
+});
+
+// ─── RENDER PRODUCTS ─────────────────────────────────────────────────────────
+function renderProducts() {
+  const grid = document.getElementById('product-grid');
+  const noResults = document.getElementById('no-results');
+  const countEl = document.getElementById('product-count');
+
+  let filtered = products.filter(p => {
+    const matchCat = activeFilter === 'all' || p.category === activeFilter;
+    const matchSearch = !searchQuery ||
+      p.name.toLowerCase().includes(searchQuery) ||
+      p.category.toLowerCase().includes(searchQuery) ||
+      p.material.toLowerCase().includes(searchQuery);
+    return matchCat && matchSearch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '';
+    noResults.classList.add('show');
+    countEl.textContent = '';
+  } else {
+    noResults.classList.remove('show');
+    countEl.textContent = `${filtered.length} piece${filtered.length !== 1 ? 's' : ''}`;
+
+    grid.innerHTML = filtered.map((p, i) => `
+      <div class="product-card card-glass rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-obsidian-900/60 fade-in cursor-pointer group"
+           style="animation-delay:${i * 60}ms" onclick="openModal(${p.id})">
+        <div class="overflow-hidden h-52">
+          <img src="${p.thumb}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy"/>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="category-badge px-2.5 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300">${p.category}</span>
+            <span class="font-display text-walnut-600 dark:text-walnut-400 text-lg font-semibold">${p.priceDisplay}</span>
+          </div>
+          <h3 class="font-display text-xl text-obsidian-900 dark:text-stone-100 leading-snug mb-1 group-hover:text-walnut-600 dark:group-hover:text-walnut-400 transition">${p.name}</h3>
+          <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-1">${p.material}</p>
+          <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-4">${p.dimensions}</p>
+          <button onclick="event.stopPropagation();openModal(${p.id})" class="w-full text-sm font-body py-2.5 rounded-xl border border-walnut-300 dark:border-walnut-700 text-walnut-700 dark:text-walnut-300 hover:bg-walnut-600 hover:text-white dark:hover:bg-walnut-600 dark:hover:text-white hover:border-walnut-600 transition">
+            View Details
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+    // Trigger fade-in
+    requestAnimationFrame(() => {
+      document.querySelectorAll('#product-grid .fade-in').forEach(el => {
+        el.classList.add('visible');
+      });
+    });
+  }
+}
+
+// ─── MODAL ───────────────────────────────────────────────────────────────────
+const overlay = document.getElementById('modal-overlay');
+const modalContent = document.getElementById('modal-content');
+
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+
+  document.getElementById('modal-img').src = p.image;
+  document.getElementById('modal-img').alt = p.name;
+  document.getElementById('modal-category').textContent = p.category;
+  document.getElementById('modal-name').textContent = p.name;
+  document.getElementById('modal-desc').textContent = p.description;
+  document.getElementById('modal-material').textContent = p.material;
+  document.getElementById('modal-dimensions').textContent = p.dimensions;
+  document.getElementById('modal-price').textContent = p.priceDisplay;
+  document.getElementById('modal-inquire').href = `https://m.me/?text=Hi! I'm interested in: ${encodeURIComponent(p.name)}`;
+
+  const finishesEl = document.getElementById('modal-finishes');
+  finishesEl.innerHTML = p.finishes.map(f =>
+    `<span class="text-xs font-body px-3 py-1 rounded-full bg-obsidian-100 dark:bg-obsidian-800 text-obsidian-600 dark:text-stone-300">${f}</span>`
+  ).join('');
+
+  overlay.classList.remove('hidden');
+  overlay.style.opacity = '0';
+  modalContent.style.opacity = '0';
+  modalContent.style.transform = 'scale(0.95) translateY(10px)';
+  document.body.style.overflow = 'hidden';
+
+  requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+    modalContent.style.opacity = '1';
+    modalContent.style.transform = 'scale(1) translateY(0)';
+  });
+}
+
+function closeModal() {
+  overlay.style.opacity = '0';
+  modalContent.style.opacity = '0';
+  modalContent.style.transform = 'scale(0.95) translateY(10px)';
+  setTimeout(() => {
+    overlay.classList.add('hidden');
+    document.body.style.overflow = '';
+  }, 300);
+}
+
+document.getElementById('modal-close').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─── BACK TO TOP ─────────────────────────────────────────────────────────────
+const backToTop = document.getElementById('back-to-top');
+window.addEventListener('scroll', () => {
+  backToTop.classList.toggle('show', window.scrollY > 400);
+});
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+// ─── SCROLL FADE ─────────────────────────────────────────────────────────────
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+
+function observeFadeIns() {
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => io.observe(el));
+}
+
+// ─── LOADING SCREEN ───────────────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  renderProducts();
+  observeFadeIns();
+
+  // Observe static fade-ins
+  document.querySelectorAll('main .fade-in').forEach(el => io.observe(el));
+
+  setTimeout(() => {
+    document.getElementById('loading-screen').classList.add('hidden');
+  }, 200);
+});
+</script>
+</body>
+</html>

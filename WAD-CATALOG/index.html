@@ -19,29 +19,14 @@
           },
           colors: {
             walnut: {
-              50: '#faf6f1',
-              100: '#f2e9db',
-              200: '#e3cfb4',
-              300: '#cfae86',
-              400: '#bb8d5e',
-              500: '#a87040',
-              600: '#8f5933',
-              700: '#72432b',
-              800: '#5d3727',
-              900: '#4d2f24',
+              50: '#faf6f1', 100: '#f2e9db', 200: '#e3cfb4', 300: '#cfae86',
+              400: '#bb8d5e', 500: '#a87040', 600: '#8f5933', 700: '#72432b',
+              800: '#5d3727', 900: '#4d2f24',
             },
             obsidian: {
-              50: '#f6f6f6',
-              100: '#e7e7e7',
-              200: '#d1d1d1',
-              300: '#b0b0b0',
-              400: '#888888',
-              500: '#6d6d6d',
-              600: '#5d5d5d',
-              700: '#4f4f4f',
-              800: '#454545',
-              900: '#1a1a1a',
-              950: '#0d0d0d',
+              50: '#f6f6f6', 100: '#e7e7e7', 200: '#d1d1d1', 300: '#b0b0b0',
+              400: '#888888', 500: '#6d6d6d', 600: '#5d5d5d', 700: '#4f4f4f',
+              800: '#454545', 900: '#1a1a1a', 950: '#0d0d0d',
             }
           }
         }
@@ -96,12 +81,8 @@
     .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* Modal */
-    #modal-overlay {
-      transition: opacity 0.3s ease;
-    }
-    #modal-content {
-      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
+    #modal-overlay { transition: opacity 0.3s ease; }
+    #modal-content { transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); }
     #modal-overlay.hidden { opacity: 0; pointer-events: none; }
     #modal-overlay:not(.hidden) { opacity: 1; }
 
@@ -113,15 +94,11 @@
     }
 
     /* Back to top */
-    #back-to-top {
-      transition: opacity 0.3s, transform 0.3s;
-    }
+    #back-to-top { transition: opacity 0.3s, transform 0.3s; }
     #back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
     /* Messenger button pulse */
-    .pulse-ring {
-      animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite;
-    }
+    .pulse-ring { animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite; }
     @keyframes pulse-ring {
       0%, 100% { box-shadow: 0 0 0 0 rgba(168,112,64,0.5); }
       50% { box-shadow: 0 0 0 10px rgba(168,112,64,0); }
@@ -154,10 +131,7 @@
       border: 1px solid rgba(0,0,0,0.06);
     }
 
-    /* Separator line */
     .sep { width: 40px; height: 1px; background: #a87040; }
-
-    /* Section label */
     .section-label {
       font-family: 'DM Sans', sans-serif;
       font-size: 11px;
@@ -166,90 +140,107 @@
       color: #a87040;
     }
 
-    /* ── IMAGE LIGHTBOX ─────────────────────────────────────────── */
-    #lightbox {
-      position: fixed;
-      inset: 0;
-      z-index: 9000;
-      background: rgba(0, 0, 0, 0.96);
+    /* ── IMAGE CAROUSEL (modal) ────────────────────────────────── */
+    #carousel-track-wrapper {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+    }
+    #carousel-track {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
+      height: 100%;
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      will-change: transform;
+    }
+    .carousel-slide {
+      flex: 0 0 100%;
+      height: 100%;
+      position: relative;
+      cursor: zoom-in;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      user-select: none;
     }
-    #lightbox.open {
-      opacity: 1;
-      pointer-events: auto;
-    }
-    #lightbox-img {
-      max-width: 100vw;
-      max-height: 100dvh;
-      width: auto;
-      height: auto;
-      object-fit: contain;
-      transform: scale(0.92);
-      transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border-radius: 4px;
-      /* Pinch-to-zoom support */
-      touch-action: pinch-zoom;
-    }
-    #lightbox.open #lightbox-img {
-      transform: scale(1);
-    }
-    #lightbox-close {
+
+    /* Prev / Next arrows */
+    .carousel-arrow {
       position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 40px;
-      height: 40px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255,255,255,0.18);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.2s;
-      backdrop-filter: blur(8px);
+      transition: background 0.2s, opacity 0.2s;
+      opacity: 0;
     }
-    #lightbox-close:hover { background: rgba(255,255,255,0.22); }
-    #lightbox-hint {
+    #carousel-track-wrapper:hover .carousel-arrow { opacity: 1; }
+    @media (hover: none) { .carousel-arrow { opacity: 1 !important; } }
+    .carousel-arrow:hover { background: rgba(0,0,0,0.65); }
+    .carousel-arrow.hidden-arrow { opacity: 0 !important; pointer-events: none; }
+    #carousel-prev { left: 10px; }
+    #carousel-next { right: 10px; }
+
+    /* Dot indicators */
+    #carousel-dots {
       position: absolute;
-      bottom: 20px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+      z-index: 10;
+    }
+    .carousel-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .carousel-dot.active {
+      background: #fff;
+      transform: scale(1.3);
+    }
+
+    /* Counter badge (1 / 3) */
+    #carousel-counter {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;
       font-family: 'DM Sans', sans-serif;
       font-size: 11px;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      white-space: nowrap;
-      pointer-events: none;
+      letter-spacing: 0.12em;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      color: rgba(255,255,255,0.85);
+      padding: 3px 9px;
+      border-radius: 20px;
     }
-    /* Clickable image inside modal */
-    #modal-img-wrapper {
-      position: relative;
-      cursor: zoom-in;
-      overflow: hidden;
-      border-radius: inherit;
-    }
-    #modal-img-wrapper::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      transition: background 0.25s;
-    }
-    #modal-img-wrapper:hover::after {
-      background: rgba(0,0,0,0.12);
-    }
-    .zoom-icon {
+    #carousel-counter.hidden-counter { display: none; }
+
+    /* Zoom hint badge */
+    .zoom-badge {
       position: absolute;
       bottom: 12px;
       right: 12px;
-      z-index: 2;
+      z-index: 10;
       width: 34px;
       height: 34px;
       border-radius: 50%;
@@ -263,16 +254,47 @@
       transition: opacity 0.2s, transform 0.2s;
       pointer-events: none;
     }
-    #modal-img-wrapper:hover .zoom-icon {
-      opacity: 1;
-      transform: scale(1);
+    #carousel-track-wrapper:hover .zoom-badge { opacity: 1; transform: scale(1); }
+    @media (hover: none) { .zoom-badge { opacity: 1; transform: scale(1); } }
+
+    /* Swipe support */
+    #carousel-track-wrapper { touch-action: pan-y; }
+
+    /* ── IMAGE LIGHTBOX ─────────────────────────────────────────── */
+    #lightbox {
+      position: fixed; inset: 0; z-index: 9000;
+      background: rgba(0,0,0,0.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
     }
-    /* Always show zoom icon on touch devices */
-    @media (hover: none) {
-      .zoom-icon {
-        opacity: 1;
-        transform: scale(1);
-      }
+    #lightbox.open { opacity: 1; pointer-events: auto; }
+    #lightbox-img {
+      max-width: 100vw; max-height: 100dvh;
+      width: auto; height: auto;
+      object-fit: contain;
+      transform: scale(0.92);
+      transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94);
+      border-radius: 4px;
+      touch-action: pinch-zoom;
+    }
+    #lightbox.open #lightbox-img { transform: scale(1); }
+    #lightbox-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    #lightbox-close:hover { background: rgba(255,255,255,0.22); }
+    #lightbox-hint {
+      position: absolute; bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      font-family: 'DM Sans', sans-serif; font-size: 11px;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); white-space: nowrap; pointer-events: none;
     }
   </style>
 </head>
@@ -289,11 +311,9 @@
 <!-- ═══════════════════════════ NAVBAR ═══════════════════════════ -->
 <nav id="navbar" class="glass-nav fixed top-0 left-0 right-0 z-50 px-4 md:px-8 lg:px-16">
   <div class="max-w-7xl mx-auto flex items-center justify-between h-16 md:h-20">
-
-    <!-- Logo -->
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-full bg-walnut-600 flex items-center justify-center">
-        <img src="./assets/logo.png" alt="WAD Furniture Logo" srcset="">
+        <img src="./assets/logo.png" alt="WAD Furniture Logo">
       </div>
       <div>
         <p class="font-display text-lg leading-none text-obsidian-900 dark:text-stone-100 font-semibold tracking-wide">WAD Furniture</p>
@@ -301,7 +321,6 @@
       </div>
     </div>
 
-    <!-- Desktop search -->
     <div class="hidden md:flex items-center flex-1 max-w-sm mx-8">
       <div class="relative w-full">
         <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-obsidian-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -309,23 +328,19 @@
       </div>
     </div>
 
-    <!-- Right actions -->
     <div class="flex items-center gap-3">
-      <!-- Dark mode toggle -->
       <button id="dark-toggle" aria-label="Toggle dark mode" class="w-9 h-9 rounded-full border border-obsidian-200 dark:border-obsidian-700 flex items-center justify-center hover:bg-walnut-100 dark:hover:bg-obsidian-800 transition">
-        <svg id="sun-icon" class="w-4 h-4 text-obsidian-600 dark:hidden" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
-        <svg id="moon-icon" class="w-4 h-4 text-stone-300 hidden dark:block" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        <svg class="w-4 h-4 text-obsidian-600 dark:hidden" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <svg class="w-4 h-4 text-stone-300 hidden dark:block" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
       </button>
-      <!-- Hamburger -->
       <button id="hamburger" class="md:hidden w-9 h-9 rounded-full border border-obsidian-200 dark:border-obsidian-700 flex flex-col items-center justify-center gap-1.5 hover:bg-walnut-100 dark:hover:bg-obsidian-800 transition">
-        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block transition-all duration-300" id="hb1"></span>
-        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block transition-all duration-300" id="hb2"></span>
-        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block transition-all duration-300" id="hb3"></span>
+        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block"></span>
+        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block"></span>
+        <span class="w-4 h-px bg-obsidian-700 dark:bg-stone-300 block"></span>
       </button>
     </div>
   </div>
 
-  <!-- Mobile menu -->
   <div id="mobile-menu" class="md:hidden overflow-hidden max-h-0 transition-all duration-400 ease-in-out">
     <div class="pb-4 pt-2 px-2 flex flex-col gap-3">
       <div class="relative">
@@ -338,7 +353,6 @@
 
 <!-- ═══════════════════════════ CATALOG HEADER ═══════════════════════════ -->
 <main class="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 pt-28 md:pt-32">
-
   <div class="flex flex-col items-start gap-3 mb-10 fade-in">
     <p class="section-label">Premium Collection</p>
     <div class="sep"></div>
@@ -349,17 +363,12 @@
       Handcrafted Philippine hardwood furniture built for generations. Each piece tells a story of craftsmanship and timeless elegance.
     </p>
     <p class="font-body text-obsidian-500 dark:text-obsidian-300 text-sm md:text-base max-w-lg leading-relaxed mt-1">
-      Screenshot the desired design and send it to us on <a href="https://www.facebook.com/wadfurniturephilippines2025" target="_blank" class="underlined text-blue-500">Facebook</a>.
+      Screenshot the desired design and send it to us on <a href="https://www.facebook.com/wadfurniturephilippines2025" target="_blank" class="text-blue-500 underline">Facebook</a>.
     </p>
   </div>
 
-  <!-- ═══════════ FILTER BUTTONS ═══════════ -->
-  <div
-  id="filter-bar"
-  class="sticky top-16 md:top-20 z-30 flex flex-wrap gap-2 mb-10 fade-in
-         py-4 bg-stone-50/80 dark:bg-obsidian-950/80
-         backdrop-blur-xl border-b border-black/5 dark:border-white/5"
->
+  <!-- FILTER BUTTONS -->
+  <div id="filter-bar" class="sticky top-16 md:top-20 z-30 flex flex-wrap gap-2 mb-10 fade-in py-4 bg-stone-50/80 dark:bg-obsidian-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5">
     <button class="filter-btn active px-5 py-2 rounded-full text-sm font-body border border-walnut-400 text-walnut-600 dark:text-walnut-300 dark:border-walnut-600 hover:bg-walnut-50 dark:hover:bg-walnut-900/30 transition" data-filter="all">All</button>
     <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Doors">Doors</button>
     <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Cabinets">Cabinets</button>
@@ -368,20 +377,15 @@
   </div>
 
   <p class="text-sm text-obsidian-400 uppercase dark:text-obsidian-500 mb-4 font-body">Here's our kiln dried wood products</p>
-
-  <!-- ═══════════ PRODUCT COUNT ═══════════ -->
   <p id="product-count" class="text-xs tracking-widest uppercase text-obsidian-400 dark:text-obsidian-500 mb-6 font-body"></p>
 
-  <!-- ═══════════ NO RESULTS ═══════════ -->
   <div id="no-results" class="no-results flex-col items-center justify-center py-24 gap-4">
     <svg class="w-10 h-10 text-obsidian-300" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <p class="font-display text-2xl text-obsidian-400 italic">No products found</p>
     <p class="text-sm text-obsidian-400 font-body">Try a different keyword or category</p>
   </div>
 
-  <!-- ═══════════ PRODUCT GRID ═══════════ -->
-  <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-24">
-  </div>
+  <div id="product-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pb-24"></div>
 </main>
 
 <!-- ═══════════════════════════ MODAL ═══════════════════════════ -->
@@ -390,24 +394,41 @@
     <button id="modal-close" class="absolute top-5 right-5 z-10 w-9 h-9 rounded-full bg-obsidian-100 dark:bg-obsidian-800 flex items-center justify-center hover:bg-walnut-100 dark:hover:bg-walnut-900/40 transition">
       <svg class="w-4 h-4 text-obsidian-600 dark:text-stone-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
     </button>
+
     <div class="grid md:grid-cols-2">
 
-      <!-- ── Tappable image wrapper ── -->
-      <div id="modal-img-wrapper"
-           class="rounded-tl-3xl rounded-bl-3xl rounded-tr-3xl md:rounded-tr-none rounded-br-none"
-           onclick="openLightbox()"
-           title="Tap to enlarge">
-        <img id="modal-img" src="" alt="" class="w-full h-72 md:h-full object-cover rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none rounded-bl-none md:rounded-bl-3xl"/>
-        <!-- Zoom icon badge -->
-        <div class="zoom-icon">
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="11" cy="11" r="8"/>
-            <path d="m21 21-4.35-4.35"/>
-            <path d="M11 8v6M8 11h6"/>
-          </svg>
+      <!-- ── IMAGE CAROUSEL ── -->
+      <div class="relative h-72 md:h-auto rounded-tl-3xl rounded-tr-3xl md:rounded-tr-none md:rounded-bl-3xl overflow-hidden"
+           style="min-height:288px;">
+
+        <!-- Counter badge -->
+        <div id="carousel-counter" class="carousel-counter hidden-counter"></div>
+
+        <div id="carousel-track-wrapper">
+          <!-- Slides injected by JS -->
+          <div id="carousel-track"></div>
+
+          <!-- Arrows -->
+          <button id="carousel-prev" class="carousel-arrow" aria-label="Previous image">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+          </button>
+          <button id="carousel-next" class="carousel-arrow" aria-label="Next image">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
+
+          <!-- Dots -->
+          <div id="carousel-dots"></div>
+
+          <!-- Zoom badge -->
+          <div class="zoom-badge">
+            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/><path d="M11 8v6M8 11h6"/>
+            </svg>
+          </div>
         </div>
       </div>
 
+      <!-- ── DETAILS ── -->
       <div class="p-7 flex flex-col gap-4">
         <div>
           <span id="modal-category" class="category-badge inline-block px-3 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300 mb-3"></span>
@@ -434,7 +455,8 @@
             <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-0.5">Starting at</p>
             <p id="modal-price" class="font-display text-3xl text-walnut-600 dark:text-walnut-400 font-semibold"></p>
           </div>
-          <a id="modal-inquire" href="https://m.me/wadfurniturephilippines2025" target="_blank" class="inline-flex items-center gap-2 bg-walnut-600 hover:bg-walnut-700 text-white text-sm font-body px-5 py-3 rounded-xl transition">
+          <a id="modal-inquire" href="https://m.me/wadfurniturephilippines2025" target="_blank"
+             class="inline-flex items-center gap-2 bg-walnut-600 hover:bg-walnut-700 text-white text-sm font-body px-5 py-3 rounded-xl transition">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             Inquire Now
           </a>
@@ -456,12 +478,15 @@
 </div>
 
 <!-- ═══════════════════════════ BACK TO TOP ═══════════════════════════ -->
-<button id="back-to-top" aria-label="Back to top" class="fixed bottom-28 right-5 z-40 w-11 h-11 rounded-full bg-walnut-600 text-white flex items-center justify-center shadow-lg opacity-0 -translate-y-2 pointer-events-none hover:bg-walnut-700 transition">
+<button id="back-to-top" aria-label="Back to top"
+  class="fixed bottom-28 right-5 z-40 w-11 h-11 rounded-full bg-walnut-600 text-white flex items-center justify-center shadow-lg opacity-0 -translate-y-2 pointer-events-none hover:bg-walnut-700 transition">
   <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></svg>
 </button>
 
 <!-- ═══════════════════════════ MESSENGER BUTTON ═══════════════════════════ -->
-<a href="https://m.me/wadfurniturephilippines2025" target="_blank" id="messenger-btn" class="pulse-ring fixed bottom-6 right-5 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center" style="background: linear-gradient(135deg,#0099ff,#a033ff);" title="Chat on Messenger">
+<a href="https://m.me/wadfurniturephilippines2025" target="_blank" id="messenger-btn"
+   class="pulse-ring fixed bottom-6 right-5 z-40 w-14 h-14 rounded-full shadow-xl flex items-center justify-center"
+   style="background: linear-gradient(135deg,#0099ff,#a033ff);" title="Chat on Messenger">
   <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor">
     <path d="M12 0C5.374 0 0 4.976 0 11.12c0 3.488 1.724 6.598 4.419 8.649V24l4.042-2.224a12.44 12.44 0 003.539.511c6.626 0 12-4.976 12-11.12C24 4.976 18.626 0 12 0zm1.264 14.981l-3.064-3.27-5.981 3.27L10.764 8.4l3.136 3.27L19.8 8.4l-6.536 6.581z"/>
   </svg>
@@ -469,15 +494,13 @@
 
 <!-- ═══════════════════════════ JAVASCRIPT ═══════════════════════════ -->
 <script>
-// ─── PRODUCT DATA ────────────────────────────────────────────────────────────
 // ─── STATE ───────────────────────────────────────────────────────────────────
 let activeFilter = 'all';
-let searchQuery = '';
+let searchQuery  = '';
 
 // ─── DARK MODE ───────────────────────────────────────────────────────────────
 const darkToggle = document.getElementById('dark-toggle');
 const html = document.documentElement;
-
 function applyDark(dark) {
   dark ? html.classList.add('dark') : html.classList.remove('dark');
   localStorage.setItem('wad-dark', dark ? '1' : '0');
@@ -486,32 +509,20 @@ applyDark(localStorage.getItem('wad-dark') === '1');
 darkToggle.addEventListener('click', () => applyDark(!html.classList.contains('dark')));
 
 // ─── HAMBURGER ───────────────────────────────────────────────────────────────
-const hamburger = document.getElementById('hamburger');
+const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobile-menu');
 let menuOpen = false;
-
 hamburger.addEventListener('click', () => {
   menuOpen = !menuOpen;
   mobileMenu.style.maxHeight = menuOpen ? mobileMenu.scrollHeight + 'px' : '0';
 });
 
 // ─── SEARCH ──────────────────────────────────────────────────────────────────
-const searchInput = document.getElementById('search-input');
+const searchInput  = document.getElementById('search-input');
 const searchMobile = document.getElementById('search-mobile');
-
-function onSearch(val) {
-  searchQuery = val.toLowerCase();
-  renderProducts();
-}
-
-searchInput.addEventListener('input', e => {
-  searchMobile.value = e.target.value;
-  onSearch(e.target.value);
-});
-searchMobile.addEventListener('input', e => {
-  searchInput.value = e.target.value;
-  onSearch(e.target.value);
-});
+function onSearch(val) { searchQuery = val.toLowerCase(); renderProducts(); }
+searchInput.addEventListener('input',  e => { searchMobile.value = e.target.value; onSearch(e.target.value); });
+searchMobile.addEventListener('input', e => { searchInput.value  = e.target.value; onSearch(e.target.value); });
 
 // ─── FILTER ──────────────────────────────────────────────────────────────────
 document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -525,12 +536,12 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 
 // ─── RENDER PRODUCTS ─────────────────────────────────────────────────────────
 function renderProducts() {
-  const grid = document.getElementById('product-grid');
-  const noResults = document.getElementById('no-results');
-  const countEl = document.getElementById('product-count');
+  const grid     = document.getElementById('product-grid');
+  const noRes    = document.getElementById('no-results');
+  const countEl  = document.getElementById('product-count');
 
-  let filtered = products.filter(p => {
-    const matchCat = activeFilter === 'all' || p.category === activeFilter;
+  const filtered = products.filter(p => {
+    const matchCat    = activeFilter === 'all' || p.category === activeFilter;
     const matchSearch = !searchQuery ||
       p.name.toLowerCase().includes(searchQuery) ||
       p.category.toLowerCase().includes(searchQuery) ||
@@ -540,81 +551,167 @@ function renderProducts() {
 
   if (filtered.length === 0) {
     grid.innerHTML = '';
-    noResults.classList.add('show');
+    noRes.classList.add('show');
     countEl.textContent = '';
-  } else {
-    noResults.classList.remove('show');
-    countEl.textContent = `${filtered.length} piece${filtered.length !== 1 ? 's' : ''}`;
-
-    grid.innerHTML = filtered.map((p, i) => `
-      <div class="product-card card-glass rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-obsidian-900/60 fade-in cursor-pointer group"
-           style="animation-delay:${i * 60}ms" onclick="openModal(${p.id})">
-        <div class="overflow-hidden h-52">
-          <img src="${p.thumb}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy"/>
-        </div>
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-2">
-            <span class="category-badge px-2.5 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300">${p.category}</span>
-            <span class="font-display text-walnut-600 dark:text-walnut-400 text-lg font-semibold">${p.priceDisplay}</span>
-          </div>
-          <h3 class="font-display text-xl text-obsidian-900 dark:text-stone-100 leading-snug mb-1 group-hover:text-walnut-600 dark:group-hover:text-walnut-400 transition">${p.name}</h3>
-          <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-1">${p.material}</p>
-          <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-4">${p.dimensions}</p>
-          <button onclick="event.stopPropagation();openModal(${p.id})" class="w-full text-sm font-body py-2.5 rounded-xl border border-walnut-300 dark:border-walnut-700 text-walnut-700 dark:text-walnut-300 hover:bg-walnut-600 hover:text-white dark:hover:bg-walnut-600 dark:hover:text-white hover:border-walnut-600 transition">
-            View Details
-          </button>
-        </div>
-      </div>
-    `).join('');
-
-    // Trigger fade-in
-    requestAnimationFrame(() => {
-      document.querySelectorAll('#product-grid .fade-in').forEach(el => {
-        el.classList.add('visible');
-      });
-    });
+    return;
   }
+
+  noRes.classList.remove('show');
+  countEl.textContent = `${filtered.length} piece${filtered.length !== 1 ? 's' : ''}`;
+
+  grid.innerHTML = filtered.map((p, i) => `
+    <div class="product-card card-glass rounded-2xl overflow-hidden shadow-sm hover:shadow-xl dark:hover:shadow-obsidian-900/60 fade-in cursor-pointer group"
+         style="animation-delay:${i * 60}ms" onclick="openModal(${p.id})">
+      <div class="overflow-hidden h-52">
+        <img src="${p.thumb}" alt="${p.name}" class="w-full h-full object-cover" loading="lazy"/>
+      </div>
+      <div class="p-5">
+        <div class="flex items-center justify-between mb-2">
+          <span class="category-badge px-2.5 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300">${p.category}</span>
+          <span class="font-display text-walnut-600 dark:text-walnut-400 text-lg font-semibold">${p.priceDisplay}</span>
+        </div>
+        <h3 class="font-display text-xl text-obsidian-900 dark:text-stone-100 leading-snug mb-1 group-hover:text-walnut-600 dark:group-hover:text-walnut-400 transition">${p.name}</h3>
+        <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-1">${p.material}</p>
+        <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-4">${p.dimensions}</p>
+        <button onclick="event.stopPropagation();openModal(${p.id})"
+          class="w-full text-sm font-body py-2.5 rounded-xl border border-walnut-300 dark:border-walnut-700 text-walnut-700 dark:text-walnut-300 hover:bg-walnut-600 hover:text-white dark:hover:bg-walnut-600 dark:hover:text-white hover:border-walnut-600 transition">
+          View Details
+        </button>
+      </div>
+    </div>
+  `).join('');
+
+  requestAnimationFrame(() => {
+    document.querySelectorAll('#product-grid .fade-in').forEach(el => el.classList.add('visible'));
+  });
 }
 
+// ─── CAROUSEL STATE ──────────────────────────────────────────────────────────
+let carouselImages  = [];
+let carouselIndex   = 0;
+let carouselDragStartX = null;
+
+const carouselTrack   = document.getElementById('carousel-track');
+const carouselDots    = document.getElementById('carousel-dots');
+const carouselCounter = document.getElementById('carousel-counter');
+const carouselPrev    = document.getElementById('carousel-prev');
+const carouselNext    = document.getElementById('carousel-next');
+const carouselWrapper = document.getElementById('carousel-track-wrapper');
+
+function buildCarousel(images) {
+  carouselImages = images;
+  carouselIndex  = 0;
+
+  // Build slides
+  carouselTrack.innerHTML = images.map((src, i) => `
+    <div class="carousel-slide" onclick="openLightbox(${i})">
+      <img src="${src}" alt="Product image ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}"/>
+    </div>
+  `).join('');
+  carouselTrack.style.transform = 'translateX(0)';
+
+  // Build dots
+  const multi = images.length > 1;
+  carouselDots.innerHTML = multi
+    ? images.map((_, i) => `<div class="carousel-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></div>`).join('')
+    : '';
+
+  // Counter
+  if (multi) {
+    carouselCounter.textContent = `1 / ${images.length}`;
+    carouselCounter.classList.remove('hidden-counter');
+  } else {
+    carouselCounter.classList.add('hidden-counter');
+  }
+
+  // Arrows
+  updateArrows();
+}
+
+function goToSlide(idx) {
+  carouselIndex = Math.max(0, Math.min(idx, carouselImages.length - 1));
+  carouselTrack.style.transform = `translateX(-${carouselIndex * 100}%)`;
+
+  // Update dots
+  carouselDots.querySelectorAll('.carousel-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === carouselIndex);
+  });
+
+  // Update counter
+  if (carouselImages.length > 1) {
+    carouselCounter.textContent = `${carouselIndex + 1} / ${carouselImages.length}`;
+  }
+
+  updateArrows();
+}
+
+function updateArrows() {
+  carouselPrev.classList.toggle('hidden-arrow', carouselIndex === 0 || carouselImages.length <= 1);
+  carouselNext.classList.toggle('hidden-arrow', carouselIndex === carouselImages.length - 1 || carouselImages.length <= 1);
+}
+
+carouselPrev.addEventListener('click', e => { e.stopPropagation(); goToSlide(carouselIndex - 1); });
+carouselNext.addEventListener('click', e => { e.stopPropagation(); goToSlide(carouselIndex + 1); });
+
+// Touch / mouse swipe
+carouselWrapper.addEventListener('pointerdown',  e => { carouselDragStartX = e.clientX; });
+carouselWrapper.addEventListener('pointerup', e => {
+  if (carouselDragStartX === null) return;
+  const delta = carouselDragStartX - e.clientX;
+  if (Math.abs(delta) > 40) goToSlide(carouselIndex + (delta > 0 ? 1 : -1));
+  carouselDragStartX = null;
+});
+carouselWrapper.addEventListener('pointercancel', () => { carouselDragStartX = null; });
+
+// Keyboard left/right when modal open
+document.addEventListener('keydown', e => {
+  if (document.getElementById('modal-overlay').classList.contains('hidden')) return;
+  if (lightbox.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  goToSlide(carouselIndex - 1);
+  if (e.key === 'ArrowRight') goToSlide(carouselIndex + 1);
+});
+
 // ─── MODAL ───────────────────────────────────────────────────────────────────
-const overlay = document.getElementById('modal-overlay');
+const overlay      = document.getElementById('modal-overlay');
 const modalContent = document.getElementById('modal-content');
 
 function openModal(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
 
-  document.getElementById('modal-img').src = p.image;
-  document.getElementById('modal-img').alt = p.name;
-  document.getElementById('modal-category').textContent = p.category;
-  document.getElementById('modal-name').textContent = p.name;
-  document.getElementById('modal-desc').textContent = p.description;
-  document.getElementById('modal-material').textContent = p.material;
-  document.getElementById('modal-dimensions').textContent = p.dimensions;
-  document.getElementById('modal-price').textContent = p.priceDisplay;
-  document.getElementById('modal-inquire').href = `https://m.me/?text=Hi! I'm interested in: ${encodeURIComponent(p.name)}`;
+  // Resolve images array (supports both `images: []` and legacy `image: ''`)
+  const imgs = Array.isArray(p.images) && p.images.length > 0 ? p.images : [p.image];
+  buildCarousel(imgs);
 
-  const finishesEl = document.getElementById('modal-finishes');
-  finishesEl.innerHTML = p.finishes.map(f =>
+  document.getElementById('modal-category').textContent  = p.category;
+  document.getElementById('modal-name').textContent      = p.name;
+  document.getElementById('modal-desc').textContent      = p.description;
+  document.getElementById('modal-material').textContent  = p.material;
+  document.getElementById('modal-dimensions').textContent = p.dimensions;
+  document.getElementById('modal-price').textContent     = p.priceDisplay;
+  document.getElementById('modal-inquire').href =
+    `https://m.me/?text=Hi! I'm interested in: ${encodeURIComponent(p.name)}`;
+
+  document.getElementById('modal-finishes').innerHTML = p.finishes.map(f =>
     `<span class="text-xs font-body px-3 py-1 rounded-full bg-obsidian-100 dark:bg-obsidian-800 text-obsidian-600 dark:text-stone-300">${f}</span>`
   ).join('');
 
   overlay.classList.remove('hidden');
   overlay.style.opacity = '0';
-  modalContent.style.opacity = '0';
+  modalContent.style.opacity  = '0';
   modalContent.style.transform = 'scale(0.95) translateY(10px)';
   document.body.style.overflow = 'hidden';
 
   requestAnimationFrame(() => {
     overlay.style.opacity = '1';
-    modalContent.style.opacity = '1';
+    modalContent.style.opacity  = '1';
     modalContent.style.transform = 'scale(1) translateY(0)';
   });
 }
 
 function closeModal() {
   overlay.style.opacity = '0';
-  modalContent.style.opacity = '0';
+  modalContent.style.opacity  = '0';
   modalContent.style.transform = 'scale(0.95) translateY(10px)';
   setTimeout(() => {
     overlay.classList.add('hidden');
@@ -625,49 +722,31 @@ function closeModal() {
 document.getElementById('modal-close').addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    if (!lightbox.classList.contains('open')) closeModal();
-  }
+  if (e.key === 'Escape' && !lightbox.classList.contains('open')) closeModal();
 });
 
 // ─── LIGHTBOX ────────────────────────────────────────────────────────────────
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+const lightbox      = document.getElementById('lightbox');
+const lightboxImg   = document.getElementById('lightbox-img');
 const lightboxClose = document.getElementById('lightbox-close');
 
-function openLightbox() {
-  const src = document.getElementById('modal-img').src;
-  const alt = document.getElementById('modal-img').alt;
+function openLightbox(idx) {
+  const src = carouselImages[idx ?? carouselIndex] || carouselImages[0];
   lightboxImg.src = src;
-  lightboxImg.alt = alt;
+  lightboxImg.alt = 'Full size product image';
   lightbox.classList.add('open');
-  // Prevent body scroll while lightbox is open (already set by modal)
 }
+function closeLightbox() { lightbox.classList.remove('open'); }
 
-function closeLightbox() {
-  lightbox.classList.remove('open');
-}
-
-lightboxClose.addEventListener('click', e => {
-  e.stopPropagation();
-  closeLightbox();
-});
-
-// Tap anywhere on the dark background to close
-lightbox.addEventListener('click', e => {
-  if (e.target !== lightboxImg) closeLightbox();
-});
-
-// Close lightbox on Escape
+lightboxClose.addEventListener('click', e => { e.stopPropagation(); closeLightbox(); });
+lightbox.addEventListener('click', e => { if (e.target !== lightboxImg) closeLightbox(); });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
 });
 
 // ─── BACK TO TOP ─────────────────────────────────────────────────────────────
 const backToTop = document.getElementById('back-to-top');
-window.addEventListener('scroll', () => {
-  backToTop.classList.toggle('show', window.scrollY > 400);
-});
+window.addEventListener('scroll', () => backToTop.classList.toggle('show', window.scrollY > 400));
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 // ─── SCROLL FADE ─────────────────────────────────────────────────────────────
@@ -679,17 +758,12 @@ function observeFadeIns() {
   document.querySelectorAll('.fade-in:not(.visible)').forEach(el => io.observe(el));
 }
 
-// ─── LOADING SCREEN ───────────────────────────────────────────────────────────
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
   renderProducts();
   observeFadeIns();
-
-  // Observe static fade-ins
   document.querySelectorAll('main .fade-in').forEach(el => io.observe(el));
-
-  setTimeout(() => {
-    document.getElementById('loading-screen').classList.add('hidden');
-  }, 200);
+  setTimeout(() => document.getElementById('loading-screen').classList.add('hidden'), 200);
 });
 </script>
 </body>

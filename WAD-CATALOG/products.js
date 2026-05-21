@@ -401,6 +401,25 @@ const products = [
     image: './assets/dining/dining-table9.png',
     thumb: './assets/dining/dining-table9.png',
   },
+  {
+    id: 45, category: 'Dining Tables', name: 'Solid Kiln dried Wood Dining Table',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried dining table.',
+    image: './assets/dining/dining-table10.png',
+    thumb: './assets/dining/dining-table10.png',
+  },
+  {
+    id: 46, category: 'Dining Tables', name: 'Solid Kiln dried Wood Dining Table',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried dining table.',
+    image: './assets/dining/dining-table11.png',
+    thumb: './assets/dining/dining-table11.png',
+  },
+
 
   // BED FRAMES
   {
@@ -420,6 +439,15 @@ const products = [
     description: 'Solid high quality kiln dried Bed Frame.',
     image: './assets/bedframe/bedframe2.png',
     thumb: './assets/bedframe/bedframe2.png',
+  },
+  {
+    id: 52, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe3.png',
+    thumb: './assets/bedframe/bedframe3.png',
   },
 
   // CABINETS
@@ -449,5 +477,18 @@ const products = [
     description: 'Solid high quality kiln dried Cabinet.',
     image: './assets/cabinet/cabinet3.png',
     thumb: './assets/cabinet/cabinet3.png',
+  },
+  {
+    id: 63, category: 'Cabinets', name: 'Solid Kiln dried Wood Cabinet',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Cabinet.',
+    image: './assets/cabinet/cabinet4.png',
+    thumb: './assets/cabinet/cabinet4.png',
+    images: [                                  // ← add this for the modal slideshow
+    './assets/cabinet/cabinet4.png',         // closed view
+    './assets/cabinet/cabinet4.1.png',    // opened view
+  ],
   },
 ];

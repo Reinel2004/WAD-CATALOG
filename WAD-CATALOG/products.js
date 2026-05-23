@@ -491,4 +491,17 @@ const products = [
     './assets/cabinet/cabinet4.1.png',    // opened view
   ],
   },
+
+
+  //Doors again
+  
+  {
+    id: 70, category: 'Doors', name: 'Solid Kiln dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door36.png',
+    thumb: './assets/doors/door36.png',
+  },
 ];

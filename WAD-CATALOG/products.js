@@ -45,8 +45,8 @@ const products = [
     price: 7499, priceDisplay: '₱7,499',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 7499 pesos.',
-    image: './assets/doors/door5.png',
-    thumb: './assets/doors/door5.png',
+    image: './assets/doors/door36.png',
+    thumb: './assets/doors/door36.png',
   },
   {
     id: 6, category: 'Doors', name: 'Ordinary Kiln dried Wood Door',
@@ -501,7 +501,7 @@ const products = [
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Solid high quality kiln dried door.',
-    image: './assets/doors/door36.png',
-    thumb: './assets/doors/door36.png',
+    image: './assets/doors/door5.png',
+    thumb: './assets/doors/door5.png',
   },
 ];

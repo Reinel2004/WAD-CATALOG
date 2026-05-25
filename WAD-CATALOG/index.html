@@ -93,6 +93,29 @@
       border-color: #a87040 !important;
     }
 
+    /* Door sub-filter buttons */
+    #door-subfilter {
+      overflow: hidden;
+      max-height: 0;
+      opacity: 0;
+      transition: max-height 0.35s ease, opacity 0.3s ease, margin 0.3s ease;
+      margin-top: 0;
+    }
+    #door-subfilter.show {
+      max-height: 80px;
+      opacity: 1;
+      margin-top: 8px;
+    }
+    .door-sub-btn {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .door-sub-btn.active {
+      background: #72432b !important;
+      color: #fff !important;
+      border-color: #72432b !important;
+    }
+
     /* Back to top */
     #back-to-top { transition: opacity 0.3s, transform 0.3s; }
     #back-to-top.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
@@ -368,12 +391,26 @@
   </div>
 
   <!-- FILTER BUTTONS -->
-  <div id="filter-bar" class="sticky top-16 md:top-20 z-30 flex flex-wrap gap-2 mb-10 fade-in py-4 bg-stone-50/80 dark:bg-obsidian-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5">
-    <button class="filter-btn active px-5 py-2 rounded-full text-sm font-body border border-walnut-400 text-walnut-600 dark:text-walnut-300 dark:border-walnut-600 hover:bg-walnut-50 dark:hover:bg-walnut-900/30 transition" data-filter="all">All</button>
-    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Doors">Doors</button>
-    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Cabinets">Cabinets</button>
-    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Dining Tables">Dining Tables</button>
-    <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Bed Frames">Bed Frames</button>
+  <div id="filter-bar" class="sticky top-16 md:top-20 z-30 mb-10 fade-in py-4 bg-stone-50/80 dark:bg-obsidian-950/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5">
+
+    <!-- Main category filters -->
+    <div class="flex flex-wrap gap-2">
+      <button class="filter-btn active px-5 py-2 rounded-full text-sm font-body border border-walnut-400 text-walnut-600 dark:text-walnut-300 dark:border-walnut-600 hover:bg-walnut-50 dark:hover:bg-walnut-900/30 transition" data-filter="all">All</button>
+      <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Doors">Doors</button>
+      <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Cabinets">Cabinets</button>
+      <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Dining Tables">Dining Tables</button>
+      <button class="filter-btn px-5 py-2 rounded-full text-sm font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-600 dark:text-obsidian-300 hover:border-walnut-400 dark:hover:border-walnut-600 transition" data-filter="Bed Frames">Bed Frames</button>
+    </div>
+
+    <!-- Door sub-category filters (shown only when Doors is active) -->
+    <div id="door-subfilter" class="flex flex-wrap gap-2 pl-1">
+      <span class="door-sub-btn active px-4 py-1.5 rounded-full font-body border border-walnut-700 text-walnut-700 dark:text-walnut-300 dark:border-walnut-700 hover:bg-walnut-50 dark:hover:bg-walnut-900/30 transition cursor-pointer" data-door-type="all">All Doors</span>
+      <span class="door-sub-btn px-4 py-1.5 rounded-full font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-500 dark:text-obsidian-300 hover:border-walnut-600 dark:hover:border-walnut-600 transition cursor-pointer" data-door-type="Ordinary">Ordinary</span>
+      <span class="door-sub-btn px-4 py-1.5 rounded-full font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-500 dark:text-obsidian-300 hover:border-walnut-600 dark:hover:border-walnut-600 transition cursor-pointer" data-door-type="Main Door">Main Door</span>
+      <span class="door-sub-btn px-4 py-1.5 rounded-full font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-500 dark:text-obsidian-300 hover:border-walnut-600 dark:hover:border-walnut-600 transition cursor-pointer" data-door-type="Double Door">Double Door</span>
+      <span class="door-sub-btn px-4 py-1.5 rounded-full font-body border border-obsidian-200 dark:border-obsidian-700 text-obsidian-500 dark:text-obsidian-300 hover:border-walnut-600 dark:hover:border-walnut-600 transition cursor-pointer" data-door-type="Flush Door">Flush Door</span>
+    </div>
+
   </div>
 
   <p class="text-sm text-obsidian-400 uppercase dark:text-obsidian-500 mb-4 font-body">Here's our kiln dried wood products</p>
@@ -495,8 +532,9 @@
 <!-- ═══════════════════════════ JAVASCRIPT ═══════════════════════════ -->
 <script>
 // ─── STATE ───────────────────────────────────────────────────────────────────
-let activeFilter = 'all';
-let searchQuery  = '';
+let activeFilter  = 'all';
+let activeDoorType = 'all'; // 'all' | 'Ordinary' | 'Main Door' | 'Double Door' | 'Flush Door'
+let searchQuery   = '';
 
 // ─── DARK MODE ───────────────────────────────────────────────────────────────
 const darkToggle = document.getElementById('dark-toggle');
@@ -524,29 +562,55 @@ function onSearch(val) { searchQuery = val.toLowerCase(); renderProducts(); }
 searchInput.addEventListener('input',  e => { searchMobile.value = e.target.value; onSearch(e.target.value); });
 searchMobile.addEventListener('input', e => { searchInput.value  = e.target.value; onSearch(e.target.value); });
 
-// ─── FILTER ──────────────────────────────────────────────────────────────────
+// ─── MAIN CATEGORY FILTER ────────────────────────────────────────────────────
+const doorSubfilter = document.getElementById('door-subfilter');
+
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activeFilter = btn.dataset.filter;
+
+    // Show/hide door sub-filters
+    if (activeFilter === 'Doors') {
+      doorSubfilter.classList.add('show');
+    } else {
+      doorSubfilter.classList.remove('show');
+      activeDoorType = 'all';
+      // Reset sub-filter UI
+      document.querySelectorAll('.door-sub-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.door-sub-btn[data-door-type="all"]').classList.add('active');
+    }
+
+    renderProducts();
+  });
+});
+
+// ─── DOOR SUB-FILTER ─────────────────────────────────────────────────────────
+document.querySelectorAll('.door-sub-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.door-sub-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeDoorType = btn.dataset.doorType;
     renderProducts();
   });
 });
 
 // ─── RENDER PRODUCTS ─────────────────────────────────────────────────────────
 function renderProducts() {
-  const grid     = document.getElementById('product-grid');
-  const noRes    = document.getElementById('no-results');
-  const countEl  = document.getElementById('product-count');
+  const grid    = document.getElementById('product-grid');
+  const noRes   = document.getElementById('no-results');
+  const countEl = document.getElementById('product-count');
 
   const filtered = products.filter(p => {
     const matchCat    = activeFilter === 'all' || p.category === activeFilter;
+    const matchDoor   = activeFilter !== 'Doors' || activeDoorType === 'all' || p.doorType === activeDoorType;
     const matchSearch = !searchQuery ||
       p.name.toLowerCase().includes(searchQuery) ||
       p.category.toLowerCase().includes(searchQuery) ||
+      (p.doorType || '').toLowerCase().includes(searchQuery) ||
       p.material.toLowerCase().includes(searchQuery);
-    return matchCat && matchSearch;
+    return matchCat && matchDoor && matchSearch;
   });
 
   if (filtered.length === 0) {
@@ -567,7 +631,7 @@ function renderProducts() {
       </div>
       <div class="p-5">
         <div class="flex items-center justify-between mb-2">
-          <span class="category-badge px-2.5 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300">${p.category}</span>
+          <span class="category-badge px-2.5 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300">${p.doorType ? p.doorType : p.category}</span>
           <span class="font-display text-walnut-600 dark:text-walnut-400 text-lg font-semibold">${p.priceDisplay}</span>
         </div>
         <h3 class="font-display text-xl text-obsidian-900 dark:text-stone-100 leading-snug mb-1 group-hover:text-walnut-600 dark:group-hover:text-walnut-400 transition">${p.name}</h3>
@@ -602,7 +666,6 @@ function buildCarousel(images) {
   carouselImages = images;
   carouselIndex  = 0;
 
-  // Build slides
   carouselTrack.innerHTML = images.map((src, i) => `
     <div class="carousel-slide" onclick="openLightbox(${i})">
       <img src="${src}" alt="Product image ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}"/>
@@ -610,13 +673,11 @@ function buildCarousel(images) {
   `).join('');
   carouselTrack.style.transform = 'translateX(0)';
 
-  // Build dots
   const multi = images.length > 1;
   carouselDots.innerHTML = multi
     ? images.map((_, i) => `<div class="carousel-dot${i === 0 ? ' active' : ''}" onclick="goToSlide(${i})"></div>`).join('')
     : '';
 
-  // Counter
   if (multi) {
     carouselCounter.textContent = `1 / ${images.length}`;
     carouselCounter.classList.remove('hidden-counter');
@@ -624,7 +685,6 @@ function buildCarousel(images) {
     carouselCounter.classList.add('hidden-counter');
   }
 
-  // Arrows
   updateArrows();
 }
 
@@ -632,12 +692,10 @@ function goToSlide(idx) {
   carouselIndex = Math.max(0, Math.min(idx, carouselImages.length - 1));
   carouselTrack.style.transform = `translateX(-${carouselIndex * 100}%)`;
 
-  // Update dots
   carouselDots.querySelectorAll('.carousel-dot').forEach((d, i) => {
     d.classList.toggle('active', i === carouselIndex);
   });
 
-  // Update counter
   if (carouselImages.length > 1) {
     carouselCounter.textContent = `${carouselIndex + 1} / ${carouselImages.length}`;
   }
@@ -653,7 +711,6 @@ function updateArrows() {
 carouselPrev.addEventListener('click', e => { e.stopPropagation(); goToSlide(carouselIndex - 1); });
 carouselNext.addEventListener('click', e => { e.stopPropagation(); goToSlide(carouselIndex + 1); });
 
-// Touch / mouse swipe
 carouselWrapper.addEventListener('pointerdown',  e => { carouselDragStartX = e.clientX; });
 carouselWrapper.addEventListener('pointerup', e => {
   if (carouselDragStartX === null) return;
@@ -663,7 +720,6 @@ carouselWrapper.addEventListener('pointerup', e => {
 });
 carouselWrapper.addEventListener('pointercancel', () => { carouselDragStartX = null; });
 
-// Keyboard left/right when modal open
 document.addEventListener('keydown', e => {
   if (document.getElementById('modal-overlay').classList.contains('hidden')) return;
   if (lightbox.classList.contains('open')) return;
@@ -679,11 +735,11 @@ function openModal(id) {
   const p = products.find(x => x.id === id);
   if (!p) return;
 
-  // Resolve images array (supports both `images: []` and legacy `image: ''`)
   const imgs = Array.isArray(p.images) && p.images.length > 0 ? p.images : [p.image];
   buildCarousel(imgs);
 
-  document.getElementById('modal-category').textContent  = p.category;
+  // Show doorType in the category badge if available
+  document.getElementById('modal-category').textContent  = p.doorType ? `${p.category} — ${p.doorType}` : p.category;
   document.getElementById('modal-name').textContent      = p.name;
   document.getElementById('modal-desc').textContent      = p.description;
   document.getElementById('modal-material').textContent  = p.material;

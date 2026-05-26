@@ -445,8 +445,8 @@ const products = [
 
   // ─── CABINETS (IDs start at 71) ──────────────────────────────────────────
   {
-    id: 71, category: 'Cabinets', name: 'Solid Kiln dried Wood Cabinet',
-    material: 'Solid Kiln Dried Wood', dimensions: '',
+    id: 71, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',
+    material: 'MDF Green Spec 810 Wood', dimensions: '',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Solid high quality kiln dried Cabinet.',
@@ -454,8 +454,8 @@ const products = [
     thumb: './assets/cabinet/cabinet1.png',
   },
   {
-    id: 72, category: 'Cabinets', name: 'Solid Kiln dried Wood Cabinet',
-    material: 'Solid Kiln Dried Wood', dimensions: '',
+    id: 72, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',
+    material: 'MDF Green Spec 810 Wood', dimensions: '',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Solid high quality kiln dried Cabinet.',
@@ -463,8 +463,8 @@ const products = [
     thumb: './assets/cabinet/cabinet2.png',
   },
   {
-    id: 73, category: 'Cabinets', name: 'Solid Kiln dried Wood Cabinet',
-    material: 'Solid Kiln Dried Wood', dimensions: '',
+    id: 73, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',
+    material: 'MDF Green Spec 810 Wood', dimensions: '',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Solid high quality kiln dried Cabinet.',
@@ -472,8 +472,8 @@ const products = [
     thumb: './assets/cabinet/cabinet3.png',
   },
   {
-    id: 74, category: 'Cabinets', name: 'Solid Kiln dried Wood Cabinet',
-    material: 'Solid Kiln Dried Wood', dimensions: '',
+    id: 74, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',
+    material: 'MDF Green Spec 810 Wood', dimensions: '',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Solid high quality kiln dried Cabinet.',

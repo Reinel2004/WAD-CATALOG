@@ -40,7 +40,7 @@ const products = [
 
   // DOORS — Flush Door (₱14,499)
   {
-    id: 5, category: 'Doors', doorType: 'Main Door', name: 'Flush Kiln Dried Wood Door',
+    id: 5, category: 'Doors', doorType: 'Main Door', name: 'Main Door Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14499, priceDisplay: '₱14,499',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -49,7 +49,7 @@ const products = [
     thumb: './assets/doors/door36.png',
   },
   {
-    id: 6, category: 'Doors', doorType: 'Main Door', name: 'Flush Kiln Dried Wood Door',
+    id: 6, category: 'Doors', doorType: 'Main Door', name: 'Main Door Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14499, priceDisplay: '₱14,499',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -67,6 +67,10 @@ const products = [
     image: './assets/doors/door38.png',
     thumb: './assets/doors/door38.png',
   },
+
+
+
+
 
   // DOORS — Ordinary (₱7,499)
   {
@@ -527,5 +531,106 @@ const products = [
     description: 'Solid high quality kiln dried door.',
     image: './assets/doors/door6.png',
     thumb: './assets/doors/door6.png',
+  },
+
+  {
+    id: 73, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door39.png',
+    thumb: './assets/doors/door39.png',
+  },
+
+  {
+    id: 74, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door40.png',
+    thumb: './assets/doors/door40.png',
+  },
+
+  {
+    id: 75, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door41.png',
+    thumb: './assets/doors/door41.png',
+  },
+
+  {
+    id: 76, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door42.png',
+    thumb: './assets/doors/door42.png',
+  },
+
+  {
+    id: 77, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door43.png',
+    thumb: './assets/doors/door43.png',
+  },
+
+  {
+    id: 78, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door44.png',
+    thumb: './assets/doors/door44.png',
+  },
+
+  {
+    id: 79, category: 'Doors', doorType: 'Flush Door', name: 'Flush Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 4800, priceDisplay: '₱4,800',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 4800 pesos.',
+    image: './assets/doors/door46.png',
+    thumb: './assets/doors/door46.png',
+  },
+
+
+  {
+    id: 80, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door45.png',
+    thumb: './assets/doors/door45.png',
+  },
+
+  {
+    id: 81, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door47.png',
+    thumb: './assets/doors/door47.png',
+  },
+
+  {
+    id: 82, category: 'Doors', doorType: 'Double Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/doubledoor1.png',
+    thumb: './assets/doors/doubledoor1.png',
   },
 ];

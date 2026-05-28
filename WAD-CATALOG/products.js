@@ -524,7 +524,7 @@ const products = [
   },
 
   {
-    id: 56, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    id: 57, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -534,7 +534,7 @@ const products = [
   },
 
   {
-    id: 56, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    id: 58, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -544,7 +544,7 @@ const products = [
   },
 
   {
-    id: 57, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    id: 59, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -554,7 +554,7 @@ const products = [
   },
 
   {
-    id: 58, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    id: 60, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -564,7 +564,7 @@ const products = [
   },
 
   {
-    id: 59, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    id: 61, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
@@ -572,6 +572,16 @@ const products = [
     image: './assets/doors/door58.png',
     thumb: './assets/doors/door58.png',
   },
+  {
+    id: 62, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/door59.png',
+    thumb: './assets/doors/door59.png',
+  },
+
 
 
 
@@ -780,5 +790,15 @@ const products = [
     description: 'Solid high quality kiln dried Bed Frame.',
     image: './assets/bedframe/bedframe6.png',
     thumb: './assets/bedframe/bedframe6.png',
+  },
+
+  {
+    id: 217, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe7.png',
+    thumb: './assets/bedframe/bedframe7.png',
   },
 ];

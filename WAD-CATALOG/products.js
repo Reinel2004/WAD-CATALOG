@@ -581,6 +581,27 @@ const products = [
     image: './assets/doors/door59.png',
     thumb: './assets/doors/door59.png',
   },
+  {
+    id: 63, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/door60.png',
+    thumb: './assets/doors/door60.png',
+  },
+
+  {
+    id: 64, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/door61.png',
+    thumb: './assets/doors/door61.png',
+  },
+
+
 
 
 
@@ -793,12 +814,52 @@ const products = [
   },
 
   {
-    id: 217, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    id: 218, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
     material: 'Solid Kiln Dried Wood', dimensions: '',
     price: 14999, priceDisplay: '₱14,999',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Solid high quality kiln dried Bed Frame.',
     image: './assets/bedframe/bedframe7.png',
     thumb: './assets/bedframe/bedframe7.png',
+  },
+
+  {
+    id: 219, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe8.png',
+    thumb: './assets/bedframe/bedframe8.png',
+  },
+
+  {
+    id: 220, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe9.png',
+    thumb: './assets/bedframe/bedframe9.png',
+  },
+
+  {
+    id: 221, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe10.png',
+    thumb: './assets/bedframe/bedframe10.png',
+  },
+
+  {
+    id: 222, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe11.png',
+    thumb: './assets/bedframe/bedframe11.png',
   },
 ];

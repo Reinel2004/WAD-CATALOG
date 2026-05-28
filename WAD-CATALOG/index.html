@@ -745,8 +745,7 @@ function openModal(id) {
   document.getElementById('modal-material').textContent  = p.material;
   document.getElementById('modal-dimensions').textContent = p.dimensions;
   document.getElementById('modal-price').textContent     = p.priceDisplay;
-  document.getElementById('modal-inquire').href =
-    `https://m.me/?text=Hi! I'm interested in: ${encodeURIComponent(p.name)}`;
+  document.getElementById('modal-inquire').href = `https://m.me/?text=Hi! I'm interested in: ${encodeURIComponent(p.name)}`;
 
   document.getElementById('modal-finishes').innerHTML = p.finishes.map(f =>
     `<span class="text-xs font-body px-3 py-1 rounded-full bg-obsidian-100 dark:bg-obsidian-800 text-obsidian-600 dark:text-stone-300">${f}</span>`

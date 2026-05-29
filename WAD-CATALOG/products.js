@@ -601,6 +601,67 @@ const products = [
     thumb: './assets/doors/door61.png',
   },
 
+  {
+    id: 65, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/door62.png',
+    thumb: './assets/doors/door62.png',
+  },
+
+  {
+    id: 66, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/door63.png',
+    thumb: './assets/doors/door63.png',
+  },
+
+  {
+    id: 67, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/door64.png',
+    thumb: './assets/doors/door64.png',
+  },
+
+  {
+    id: 68, category: 'Doors', doorType: 'Double Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/doubledoor5.png',
+    thumb: './assets/doors/doubledoor5.png',
+  },
+
+  {
+    id: 69, category: 'Doors', doorType: 'Double Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/doubledoor6.png',
+    thumb: './assets/doors/doubledoor6.png',
+  },
+
+  {
+    id: 70, category: 'Doors', doorType: 'Double Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door. 70-90 x 210cm Fixed at 14999 pesos.',
+    image: './assets/doors/doubledoor7.png',
+    thumb: './assets/doors/doubledoor7.png',
+  },
+
+
 
 
 
@@ -652,6 +713,27 @@ const products = [
       './assets/cabinet/cabinet4.1.png',
     ],
   },
+  {
+    id: 75, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',
+    material: 'MDF Green Spec 810 Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Cabinet.',
+    image: './assets/cabinet/cabinet5.png',
+    thumb: './assets/cabinet/cabinet5.png',
+  },
+
+  {
+    id: 76, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',
+    material: 'MDF Green Spec 810 Wood', dimensions: '',
+    price: 14999, priceDisplay: '₱14,999',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Cabinet.',
+    image: './assets/cabinet/cabinet6.png',
+    thumb: './assets/cabinet/cabinet6.png',
+  },
+
+  
 
   // ─── DINING TABLES (IDs start at 141) ────────────────────────────────────
   {

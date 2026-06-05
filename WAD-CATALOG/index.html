@@ -487,11 +487,7 @@
             <div id="modal-finishes" class="flex flex-wrap gap-2"></div>
           </div>
         </div>
-        <div class="flex items-end justify-between mt-auto pt-2 border-t border-obsidian-100 dark:border-obsidian-800">
-          <div>
-            <p class="text-[10px] uppercase tracking-widest text-obsidian-400 mb-0.5">Starting at</p>
-            <p id="modal-price" class="font-display text-3xl text-walnut-600 dark:text-walnut-400 font-semibold"></p>
-          </div>
+        <div class="flex items-end justify-end mt-auto pt-2 border-t border-obsidian-100 dark:border-obsidian-800">
           <a id="modal-inquire" href="https://m.me/wadfurniturephilippines2025" target="_blank"
              class="inline-flex items-center gap-2 bg-walnut-600 hover:bg-walnut-700 text-white text-sm font-body px-5 py-3 rounded-xl transition">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -632,7 +628,6 @@ function renderProducts() {
       <div class="p-5">
         <div class="flex items-center justify-between mb-2">
           <span class="category-badge px-2.5 py-1 rounded-full bg-walnut-100 dark:bg-walnut-900/40 text-walnut-600 dark:text-walnut-300">${p.doorType ? p.doorType : p.category}</span>
-          <span class="font-display text-walnut-600 dark:text-walnut-400 text-lg font-semibold">${p.priceDisplay}</span>
         </div>
         <h3 class="font-display text-xl text-obsidian-900 dark:text-stone-100 leading-snug mb-1 group-hover:text-walnut-600 dark:group-hover:text-walnut-400 transition">${p.name}</h3>
         <p class="text-xs text-obsidian-400 dark:text-obsidian-500 font-body mb-1">${p.material}</p>
@@ -744,7 +739,6 @@ function openModal(id) {
   document.getElementById('modal-desc').textContent      = p.description;
   document.getElementById('modal-material').textContent  = p.material;
   document.getElementById('modal-dimensions').textContent = p.dimensions;
-  document.getElementById('modal-price').textContent     = p.priceDisplay;
   document.getElementById('modal-inquire').href = `https://m.me/?text=Hi! I'm interested in: ${encodeURIComponent(p.name)}`;
 
   document.getElementById('modal-finishes').innerHTML = p.finishes.map(f =>

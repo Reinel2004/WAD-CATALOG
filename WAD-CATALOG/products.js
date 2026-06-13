@@ -580,6 +580,33 @@ const products = [
     thumb: './assets/doors/door65.jpg',
   },
 
+  {
+    id: 72, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door.',
+    image: './assets/doors/door66.png',
+    thumb: './assets/doors/door66.png',
+  },
+
+  {
+    id: 73, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door.',
+    image: './assets/doors/door67.png',
+    thumb: './assets/doors/door67.png',
+  },
+
+  {
+    id: 74, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door.',
+    image: './assets/doors/door68.png',
+    thumb: './assets/doors/door68.png',
+  },
+
   // ─── CABINETS (IDs start at 71) ──────────────────────────────────────────
   {
     id: 151, category: 'Cabinets', name: 'MDF Green Spec 810 Wood Cabinet',

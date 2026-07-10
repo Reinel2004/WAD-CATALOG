@@ -608,7 +608,7 @@ const products = [
   },
 
   {
-    id: 75, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    id: 75, category: 'Doors', doorType: 'Ordinary', name: 'Solid Kiln Dried Wood Door',
     material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
     finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
     description: 'Ordinary high quality kiln dried wood door.',
@@ -624,6 +624,34 @@ const products = [
     image: './assets/doors/door70.png',
     thumb: './assets/doors/door70.png',
   },
+
+  {
+    id: 77, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door.',
+    image: './assets/doors/door71.png',
+    thumb: './assets/doors/door71.png',
+  },
+
+  {
+    id: 78, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door.',
+    image: './assets/doors/door72.png',
+    thumb: './assets/doors/door72.png',
+  },
+
+  {
+    id: 79, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Ordinary high quality kiln dried wood door.',
+    image: './assets/doors/door73.png',
+    thumb: './assets/doors/door73.png',
+  },
+
   
 
   // ─── CABINETS (IDs start at 71) ──────────────────────────────────────────
@@ -858,5 +886,14 @@ const products = [
     description: 'Solid high quality kiln dried Bed Frame.',
     image: './assets/bedframe/bedframe11.png',
     thumb: './assets/bedframe/bedframe11.png',
+  },
+
+  {
+    id: 467, category: 'Bed Frames', name: 'Solid Kiln dried Wood Bed Frame',
+    material: 'Solid Kiln Dried Wood', dimensions: '',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried Bed Frame.',
+    image: './assets/bedframe/bedframe12.png',
+    thumb: './assets/bedframe/bedframe12.png',
   },
 ];

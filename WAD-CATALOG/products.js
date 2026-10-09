@@ -701,6 +701,69 @@ const products = [
     thumb: './assets/doors/door78.png',
   },
 
+  {
+    id: 85, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door79.png',
+    thumb: './assets/doors/door79.png',
+  },
+
+  {
+    id: 86, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door80.png',
+    thumb: './assets/doors/door80.png',
+  },
+
+  {
+    id: 87, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door81.png',
+    thumb: './assets/doors/door81.png',
+  },
+
+  {
+    id: 88, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door82.png',
+    thumb: './assets/doors/door82.png',
+  },
+
+  {
+    id: 89, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door83.png',
+    thumb: './assets/doors/door83.png',
+  },
+
+  {
+    id: 90, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door84.png',
+    thumb: './assets/doors/door84.png',
+  },
+
+  {
+    id: 91, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Sand Beige'],
+    description: 'Solid high quality kiln dried door.',
+    image: './assets/doors/door85.png',
+    thumb: './assets/doors/door85.png',
+  },
+
 
   
 

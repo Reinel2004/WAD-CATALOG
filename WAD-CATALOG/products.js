@@ -1018,4 +1018,13 @@ const products = [
     image: './assets/doors/wad-468.jpg',
     thumb: './assets/doors/wad-468.jpg',
   },
+
+  {
+    id: 469, category: 'Dining Tables', name: '6-Seater Wooden Dining Table Set',
+    material: 'Wood', dimensions: '',
+    finishes: ['Varnished', 'Natural Wood'],
+    description: 'Modern six-seater dining table set featuring an oval wooden top, unique pedestal base, and chairs with upholstered white round-back seats.',
+    image: './assets/dining/wad-469.jpg',
+    thumb: './assets/dining/wad-469.jpg',
+  },
 ];

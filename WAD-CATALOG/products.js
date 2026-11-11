@@ -1009,4 +1009,13 @@ const products = [
     image: './assets/bedframe/bedframe12.png',
     thumb: './assets/bedframe/bedframe12.png',
   },
+
+  {
+    id: 468, category: 'Doors', doorType: 'Ordinary', name: 'Solid Kiln Dried Wood Door',
+    material: 'Solid Kiln Dried Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Dark Brown', 'Varnished'],
+    description: 'Modern high quality kiln dried wood door with eight panels.',
+    image: './assets/doors/wad-468.jpg',
+    thumb: './assets/doors/wad-468.jpg',
+  },
 ];

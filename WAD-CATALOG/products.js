@@ -1027,4 +1027,13 @@ const products = [
     image: './assets/dining/wad-469.jpg',
     thumb: './assets/dining/wad-469.jpg',
   },
+
+  {
+    id: 470, category: 'Doors', doorType: 'Main Door', name: 'Solid Kiln Dried Wood Door',
+    material: 'Mahogany Wood', dimensions: '80-90 x 210cm',
+    finishes: ['Mahogany Wood', 'Varnished', 'Orange', 'Brown'],
+    description: 'Modern high quality kiln dried wood door with an abstract carved design.',
+    image: './assets/doors/wad-470.jpg',
+    thumb: './assets/doors/wad-470.jpg',
+  },
 ];
